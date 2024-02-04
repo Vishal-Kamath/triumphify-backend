@@ -20,7 +20,7 @@ const handleCreateEmployee = async (
     )[0];
     if (employeeExists) {
       return res.status(400).send({
-        message: `Employee with username ${username} already exists!!`,
+        description: `Employee with username ${username} already exists!!`,
         type: "error",
       });
     }
@@ -35,12 +35,13 @@ const handleCreateEmployee = async (
     });
 
     return res.status(201).send({
-      message: `Employee with username ${username} success fully created!!`,
+      title: "Employee Created!!",
+      description: `Employee with username ${username} success fully created!!`,
       type: "success",
     });
   } catch (err) {
     Logger.error("handle create employees error", err);
-    res.status(500).json({ message: "internal server error", type: "error" });
+    res.status(500).json({ description: "internal server error", type: "error" });
   }
 };
 

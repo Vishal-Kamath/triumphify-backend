@@ -6,7 +6,8 @@ import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
 import cors from "cors";
 
-import userRouter from "@admin/entities/user/route.user";
+import userRouter from "@admin/entities/user/routes.user";
+import authRouter from "@admin/entities/auth/routes.auth";
 
 const app = express();
 const PORT = env.ADMIN_PORT || 4500;
@@ -29,6 +30,7 @@ app.use(Logger.requestLogger);
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------
+app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
 // -------------------------------------------------

@@ -25,7 +25,9 @@ const handleGetEmployees = async (req: Request, res: Response) => {
     });
   } catch (err) {
     Logger.error("handle get employees error", err);
-    res.status(500).json({ message: "internal server error", type: "error" });
+    res
+      .status(500)
+      .json({ description: "internal server error", type: "error" });
   }
 };
 

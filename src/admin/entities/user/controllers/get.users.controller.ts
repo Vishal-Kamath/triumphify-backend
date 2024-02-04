@@ -14,7 +14,7 @@ const handleGetAllUsers = async (req: Request, res: Response) => {
     Logger.error("handle Get All Users error", err);
     return res
       .status(500)
-      .send({ message: "Internal server error", type: "error" });
+      .send({ description: "Internal server error", type: "error" });
   }
 };
 
