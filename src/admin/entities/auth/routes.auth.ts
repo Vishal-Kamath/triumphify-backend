@@ -13,4 +13,6 @@ router.post(
   authControllers.handleLogin
 );
 
+router.get("/signout", authControllers.handleSignOut);
+
 export default router;

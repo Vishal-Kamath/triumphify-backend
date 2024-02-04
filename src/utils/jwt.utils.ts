@@ -6,7 +6,11 @@ export type TokenPayload = {
 };
 
 export const signToken = (
-  key: "ACCESS_TOKEN_PRIVATE" | "REFRESH_TOKEN_PRIVATE",
+  key:
+    | "ACCESS_TOKEN_PRIVATE"
+    | "REFRESH_TOKEN_PRIVATE"
+    | "ACCESS_TOKEN_PRIVATE_ADMIN"
+    | "REFRESH_TOKEN_PRIVATE_ADMIN",
   id: string
 ) => {
   const token_private_key = env[key];
@@ -28,7 +32,11 @@ export const signToken = (
 
 export function verifyJwt(
   token: string,
-  key: "ACCESS_TOKEN_PUBLIC" | "REFRESH_TOKEN_PUBLIC"
+  key:
+    | "ACCESS_TOKEN_PUBLIC"
+    | "REFRESH_TOKEN_PUBLIC"
+    | "ACCESS_TOKEN_PUBLIC_ADMIN"
+    | "REFRESH_TOKEN_PUBLIC_ADMIN"
 ) {
   const token_public_key = env[key];
   if (!token_public_key) throw Error(`${key} public secret not found`);

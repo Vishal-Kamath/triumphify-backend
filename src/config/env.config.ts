@@ -42,4 +42,11 @@ export const env = envsafe({
 
   REFRESH_TOKEN_PRIVATE: str(),
   REFRESH_TOKEN_PUBLIC: str(),
+
+  // JWT Admin
+  ACCESS_TOKEN_PRIVATE_ADMIN: str(),
+  ACCESS_TOKEN_PUBLIC_ADMIN: str(),
+
+  REFRESH_TOKEN_PRIVATE_ADMIN: str(),
+  REFRESH_TOKEN_PUBLIC_ADMIN: str(),
 });

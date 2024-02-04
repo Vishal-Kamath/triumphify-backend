@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
+import { addTokens } from "../utils/auth";
 
 const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
   try {
@@ -30,6 +31,7 @@ const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
         .send({ description: "Incorrect password", type: "error" });
     }
 
+    addTokens(res, user.id);
     return res.status(200).send({
       title: "Logged In!!",
       description: `successfully logged in as ${user.username}`,
