@@ -7,6 +7,7 @@
     "start:app": "npm run build & npm run prod:app",
     "start:admin": "npm run build & npm run prod:admin",
     "build": "tsc",
+    "watch": "tsc --watch",
     "prod:app": "cross-env NODE_ENV=production node ./dist/app/server.js",
     "prod:admin": "cross-env NODE_ENV=production node ./dist/admin/server.js",
     "dev:app": "cross-env NODE_ENV=development nodemon ./src/app/server.ts",
