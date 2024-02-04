@@ -1,0 +1,9 @@
+# Dependencies
+node_modules
+dist
+
+# Enviroment variables
+.env
+
+# Migration
+drizzle
