@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import dayjs from "dayjs";
+import _ from "lodash";
 
 export class Logger {
   static error(...msg: any[]) {
@@ -37,8 +38,15 @@ export class Logger {
       `[${chalk.gray.bold("REQ")}]:[${chalk.gray(dayjs().format())}]:${
         req.method
       } ${req.originalUrl} IP-${req.ip}${
-        req.body && JSON.stringify(req.body) !== "{}"
-          ? `\n${JSON.stringify(req.body, null, 2)}`
+        req.body &&
+        JSON.stringify(
+          _.omit(req.body, ["password", "newPassword", "currentPassword"])
+        ) !== "{}"
+          ? `\n${JSON.stringify(
+              _.omit(req.body, ["password", "newPassword", "currentPassword"]),
+              null,
+              2
+            )}`
           : ""
       }`
     );

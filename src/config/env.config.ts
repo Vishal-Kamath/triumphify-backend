@@ -32,9 +32,19 @@ export const env = envsafe({
   DB_PASSWORD: str(),
   DB_DATABASE: str(),
 
+  SESSION_SECRET: str(),
+  // Super admin config
+  SUPER_ADMIN_EMAIL: str(),
+  SUPER_ADMIN_PASSWORD_HASH: str(),
+
   // Roles
+  SUPERADMIN: str(),
   ADMIN: str(),
   EMPLOYEE: str(),
+
+  // Google auth
+  GOOGLE_CLIENT_ID: str(),
+  GOOGLE_CLIENT_SECRET: str(),
 
   // JWT
   ACCESS_TOKEN_PRIVATE: str(),
@@ -49,4 +59,7 @@ export const env = envsafe({
 
   REFRESH_TOKEN_PRIVATE_ADMIN: str(),
   REFRESH_TOKEN_PUBLIC_ADMIN: str(),
+
+  RESET_TOKEN_PRIVATE: str(),
+  RESET_TOKEN_PUBLIC: str(),
 });

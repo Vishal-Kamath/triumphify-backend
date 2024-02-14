@@ -38,10 +38,12 @@ const handleSignUp = async (
       password: hashedPassword,
     });
 
+    // TODO: send email verification
+
     addTokens(res, id);
     return res.status(201).json({
-      title: "User created successfully",
-      description: "Check your inbox to confirm email",
+      title: "User created successfully!!",
+      description: "Be sure to verify your email",
       type: "success",
     });
   } catch (err) {

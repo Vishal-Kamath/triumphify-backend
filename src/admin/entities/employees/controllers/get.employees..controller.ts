@@ -2,14 +2,16 @@ import { Request, Response } from "express";
 import { Logger } from "@/utils/logger";
 import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
-import { getRole } from "@/utils/getRole";
+import { getRole } from "@admin/utils/getRole";
 
 const handleGetEmployees = async (req: Request, res: Response) => {
   try {
     const employees = (
       await db
         .select({
+          id: employee.id,
           username: employee.username,
+          email: employee.email,
           role: employee.role,
           created_at: employee.created_at,
           updated_at: employee.updated_at,

@@ -1,6 +1,7 @@
-import z from "zod";
+import { isUser18Plus } from "@/app/utils/isUser18Plus";
+import { TypeOf, z } from "zod";
 
-export const SignupSchema = z.object({
+export const userDetailsSchema = z.object({
   username: z.string().trim().min(3).max(50),
   email: z.string().email().trim().min(1).max(100),
   gender: z.enum(["Male", "Female", "Other"]),
@@ -15,30 +16,16 @@ export const SignupSchema = z.object({
     .refine((dob) => {
       return isUser18Plus(dob);
     }, "You must be 18 years or older"),
-  password: z.string().trim().min(3).max(50),
 });
-export type SignupType = z.infer<typeof SignupSchema>;
+export type UserDetailsType = z.infer<typeof userDetailsSchema>;
 
-export const LoginSchema = z.object({
-  email: z.string().email().min(1).max(100),
-  password: z.string().trim().min(3).max(50),
+export const userUpdatePassword = z.object({
+  currentPassword: z.string().trim().min(3).max(50),
+  newPassword: z.string().trim().min(3).max(50),
 });
-export type LoginType = z.infer<typeof LoginSchema>;
+export type UserUpdatePasswordType = z.infer<typeof userUpdatePassword>;
 
-function isUser18Plus(birthdate: string) {
-  const userBirthdate = new Date(birthdate);
-  const currentDate = new Date();
-  const ageDifference = currentDate.getFullYear() - userBirthdate.getFullYear();
-  if (ageDifference > 18) {
-    return true;
-  } else if (ageDifference === 18) {
-    if (currentDate.getMonth() > userBirthdate.getMonth()) {
-      return true;
-    } else if (currentDate.getMonth() === userBirthdate.getMonth()) {
-      if (currentDate.getDate() >= userBirthdate.getDate()) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
+export const userVerifyEmailOtp = z.object({
+  code: z.string().min(7).max(7),
+});
+export type UserVerifyEmailOtpType = TypeOf<typeof userVerifyEmailOtp>;

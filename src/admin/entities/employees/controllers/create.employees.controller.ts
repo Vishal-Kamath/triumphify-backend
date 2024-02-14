@@ -13,22 +13,22 @@ const handleCreateEmployee = async (
   res: Response
 ) => {
   try {
-    const { username, password, role } = req.body;
+    const { email, username, password, role } = req.body;
 
     const employeeExists = (
-      await db.select().from(employee).where(eq(employee.username, username))
+      await db.select().from(employee).where(eq(employee.email, email))
     )[0];
     if (employeeExists) {
       return res.status(400).send({
-        description: `Employee with username ${username} already exists!!`,
+        description: `Employee with email ${email} already exists!!`,
         type: "error",
       });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword.length);
     await db.insert(employee).values({
       id: uuid(),
+      email,
       username,
       password: hashedPassword,
       role: role === "admin" ? env.ADMIN : env.EMPLOYEE,
@@ -36,7 +36,7 @@ const handleCreateEmployee = async (
 
     return res.status(201).send({
       title: "Employee Created!!",
-      description: `Employee with username ${username} success fully created!!`,
+      description: `Employee with username ${username} successfully created!!`,
       type: "success",
     });
   } catch (err) {

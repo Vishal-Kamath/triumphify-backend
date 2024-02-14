@@ -1,3 +1,7 @@
+import { db } from "@/lib/db";
+import { otpVerification } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+
 function otpBuilder(): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -11,9 +15,17 @@ function otpBuilder(): string {
   return otp;
 }
 
-export function generateOTP(): string {
+export async function generateOTP() {
   const otp = otpBuilder();
-  if (otp.length !== 7) {
+
+  const otpExists = (
+    await db
+      .select()
+      .from(otpVerification)
+      .where(eq(otpVerification.otp, otp))
+      .limit(1)
+  )[0];
+  if (otpExists) {
     return generateOTP();
   } else {
     return otp;

@@ -6,7 +6,11 @@ import cors from "cors";
 import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
 
-import userRouter from "@app/entities/user/route.user";
+import authRoutes from "@app/entities/auth/routes.auth";
+import userRoutes from "@app/entities/user/route.user";
+import userProtectedRoutes from "@app/entities/user/protected.routes.user";
+import validateUser from "./middlewares/validateUser";
+import initPassport from "./entities/auth/config/passport.config";
 
 const app = express();
 const PORT = env.PORT || 4000;
@@ -29,11 +33,16 @@ app.use(Logger.requestLogger);
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------
-app.use("/api/user", userRouter);
+initPassport(app);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 // -------------------------------------------------
 // Protected Routes
 // -------------------------------------------------
+app.use(validateUser);
+
+app.use("/api/user", userProtectedRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {

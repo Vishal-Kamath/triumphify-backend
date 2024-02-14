@@ -9,6 +9,12 @@ import cors from "cors";
 import userRouter from "@admin/entities/user/routes.user";
 import authRouter from "@admin/entities/auth/routes.auth";
 
+import adminEmployeeRoutes from "@admin/entities/employees/routes.admin.employee";
+import employeeRoutes from "@admin/entities/employees/routes.employee";
+import categoriesRoutes from "@admin/entities/categories/routes.categories";
+import validateEmployee from "./middlewares/validateEmployee";
+import validateAdmin from "./middlewares/validateAdmin";
+
 const app = express();
 const PORT = env.ADMIN_PORT || 4500;
 
@@ -34,10 +40,15 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
 // -------------------------------------------------
-// Protected Routes
+// Protected Routes (Employee)
 // -------------------------------------------------
-import adminEmployeeRoutes from "./entities/employees/routes.admin.employee";
-
+app.use(validateEmployee);
+app.use("/api/employees", employeeRoutes);
+app.use("/api/categories", categoriesRoutes);
+// -------------------------------------------------
+// Protected Routes (Admin)
+// -------------------------------------------------
+app.use(validateAdmin);
 app.use("/api/employees", adminEmployeeRoutes);
 
 // 404

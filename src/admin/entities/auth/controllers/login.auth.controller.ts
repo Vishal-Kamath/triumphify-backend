@@ -9,14 +9,10 @@ import { addTokens } from "../utils/auth";
 
 const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     const user = (
-      await db
-        .select()
-        .from(employee)
-        .where(eq(employee.username, username))
-        .limit(1)
+      await db.select().from(employee).where(eq(employee.email, email)).limit(1)
     )[0];
     if (!user) {
       return res
@@ -31,7 +27,7 @@ const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
         .send({ description: "Incorrect password", type: "error" });
     }
 
-    addTokens(res, user.id);
+    addTokens(res, user.id, user.role);
     return res.status(200).send({
       title: "Logged In!!",
       description: `successfully logged in as ${user.username}`,

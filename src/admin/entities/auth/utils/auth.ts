@@ -1,21 +1,33 @@
 import { Response } from "express";
 import { Logger } from "@/utils/logger";
-import { signToken } from "@/utils/jwt.utils";
+import { signToken } from "@admin/utils/jwt.utils";
 
-export const addTokens = (res: Response, id: string) => {
+export const addTokens = (res: Response, id: string, role: string) => {
   try {
-    const accessToken = signToken("ACCESS_TOKEN_PRIVATE_ADMIN", id);
-    const refreshToken = signToken("REFRESH_TOKEN_PRIVATE_ADMIN", id);
+    const accessToken = signToken({
+      key: "ACCESS_TOKEN_PRIVATE_ADMIN",
+      id,
+      role,
+    });
+    const refreshToken = signToken({
+      key: "REFRESH_TOKEN_PRIVATE_ADMIN",
+      id,
+      role,
+    });
 
     res.cookie("accessToken-admin", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 1000 * 60 * 15,
     });
     res.cookie("refreshToken-admin", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
     });
 
     return;
