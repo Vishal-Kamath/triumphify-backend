@@ -15,7 +15,7 @@ function otpBuilder(): string {
   return otp;
 }
 
-export async function generateOTP() {
+export async function generateOTP(): Promise<string> {
   const otp = otpBuilder();
 
   const otpExists = (

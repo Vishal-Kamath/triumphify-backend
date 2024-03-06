@@ -2,6 +2,32 @@ import chalk from "chalk";
 import dayjs from "dayjs";
 import _ from "lodash";
 
+function omit(object: any, fields: string[]): any {
+  if (!_.isObject(object)) {
+    return object;
+  }
+
+  if (_.isArray(object)) {
+    return object.map((item) => omit(item, fields));
+  }
+
+  const omitKeys2D = fields
+    .map((key) =>
+      Object.keys(object).filter((k) =>
+        k.toLowerCase().includes(key.toLowerCase())
+      )
+    )
+    .flat();
+  const modifiedObject = _.omit(object, omitKeys2D);
+
+  _.forOwn(modifiedObject, (value, key) => {
+    // @ts-ignore
+    modifiedObject[key] = omit(value, fields);
+  });
+
+  return modifiedObject;
+}
+
 export class Logger {
   static error(...msg: any[]) {
     console.log(
@@ -39,11 +65,9 @@ export class Logger {
         req.method
       } ${req.originalUrl} IP-${req.ip}${
         req.body &&
-        JSON.stringify(
-          _.omit(req.body, ["password", "newPassword", "currentPassword"])
-        ) !== "{}"
+        JSON.stringify(omit(req.body, ["password", "base64"])) !== "{}"
           ? `\n${JSON.stringify(
-              _.omit(req.body, ["password", "newPassword", "currentPassword"]),
+              omit(req.body, ["password", "base64"]),
               null,
               2
             )}`

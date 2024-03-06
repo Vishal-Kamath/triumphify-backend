@@ -3,16 +3,22 @@ import { Logger } from "@/utils/logger";
 import { ReqLogin } from "../validators.auth";
 import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { addTokens } from "../utils/auth";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
   try {
     const { email, password } = req.body;
 
     const user = (
-      await db.select().from(employee).where(eq(employee.email, email)).limit(1)
+      await db
+        .select()
+        .from(employee)
+        .where(and(eq(employee.email, email), eq(employee.status, "active")))
+        .limit(1)
     )[0];
     if (!user) {
       return res
@@ -28,6 +34,11 @@ const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
     }
 
     addTokens(res, user.id, user.role);
+    CSVLogger.info(
+      user.id,
+      getRole(user.role),
+      `User ${user.username} logged in`
+    );
     return res.status(200).send({
       title: "Logged In!!",
       description: `successfully logged in as ${user.username}`,

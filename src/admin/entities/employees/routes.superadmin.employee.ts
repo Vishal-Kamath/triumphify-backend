@@ -20,5 +20,15 @@ router.get(
   employeeControllers.handleFetchEmployeeDetailsForAdmin
 );
 
+router.get(
+  "/:id/status/:status",
+  employeeControllers.handleActivateDeactivateEmployee
+);
+
+router.get("/logs", employeeControllers.handleGetAllEmployeeLogsList);
+router
+  .route("/logs/:name")
+  .get(employeeControllers.handleGetEmployeeLogs)
+  .delete(employeeControllers.handleDeleteEmployeeLogs);
 
 export default router;

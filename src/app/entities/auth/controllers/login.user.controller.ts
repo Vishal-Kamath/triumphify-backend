@@ -14,6 +14,7 @@ const handleLogin = async (req: Request<{}, {}, LoginType>, res: Response) => {
     // fetch User
     const user = (
       await db.select().from(users).where(eq(users.email, email)).limit(1)
+      
     )[0];
 
     if (!user) {

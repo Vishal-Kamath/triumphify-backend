@@ -6,6 +6,8 @@ import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleUpdateEmployeePassword = async (
   req: Request<{}, {}, EmployeePassword & TokenPayload>,
@@ -42,6 +44,11 @@ const handleUpdateEmployeePassword = async (
       .set({ password: hashedPassword })
       .where(eq(employee.id, id));
 
+    CSVLogger.succes(
+      findEmployee.id,
+      getRole(findEmployee.role),
+      "update password"
+    );
     return res.status(200).send({
       title: "Password update",
       description: "new password saved successfully",

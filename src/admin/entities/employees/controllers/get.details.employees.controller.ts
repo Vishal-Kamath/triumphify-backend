@@ -27,9 +27,11 @@ const handleGetEmployeeDetails = async (
 
     return res.status(200).send({
       data: {
+        id: employeedetails.id,
         username: employeedetails.username,
         email: employeedetails.email,
         role: getRole(employeedetails.role),
+        status: employeedetails.status,
         created_at: employeedetails.created_at,
         updated_at: employeedetails.updated_at,
       },

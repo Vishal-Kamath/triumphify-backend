@@ -8,6 +8,9 @@ import sendEmail from "@/utils/mailer/mailer";
 import { resetPasswordFormat } from "@/utils/mailer/resetPassword";
 import { generateOTP } from "@/utils/otp.utils";
 import { signToken } from "@/app/utils/jwt.utils";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
+import { env } from "@/config/env.config";
 
 const handleSendResetPasswordLink = async (
   req: Request<{}, {}, EmployeeEmail>,
@@ -57,10 +60,15 @@ const handleSendResetPasswordLink = async (
       email: fetchEmployee.email,
       subject: "Reset Password",
       message: resetPasswordFormat(
-        `http://localhost:3000/auth/reset-password?token=${token}&otp=${otp}`
+        `${env.ADMIN_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`
       ),
     });
 
+    CSVLogger.info(
+      fetchEmployee.id,
+      getRole(fetchEmployee.role),
+      "password reset request"
+    );
     res.status(200).send({
       title: "Success!",
       description: "Reset password link sent successfully to your email!",

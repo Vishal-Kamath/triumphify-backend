@@ -1,0 +1,96 @@
+[
+  {
+    "order_details": {
+      "id": "02eb83b6-382b-4e0a-bddf-d737f80c95b6",
+      "user_id": "9e269d1f-daad-4b8c-b8a5-e414162c293a",
+      "sub_total": 9250,
+      "discount": 1867,
+      "coupon_code": "",
+      "coupon_discount": 0,
+      "gst": 92.5,
+      "total": 7475.5,
+      "shipping_address_name": "Vishal Kamath",
+      "shipping_address_street_address": "304, 3rd floor, Amartaru 5,\nNew Nagardas Road",
+      "shipping_address_city": "Mumbai",
+      "shipping_address_state": "Maharashtra",
+      "shipping_address_zip": "400069",
+      "shipping_address_country": "India",
+      "shipping_address_tel": "+919819313999",
+      "shipping_address_email": "vishalkamath853@gmail.com",
+      "billing_address_name": "Vishal Kamath",
+      "billing_address_street_address": "304, 3rd floor, Amartaru 5,\nNew Nagardas Road",
+      "billing_address_city": "Mumbai",
+      "billing_address_state": "Maharashtra",
+      "billing_address_zip": "400069",
+      "billing_address_country": "India",
+      "billing_address_tel": "+919819313999",
+      "billing_address_email": "vishalkamath853@gmail.com",
+      "created_at": "2024-03-05T12:32:30.000Z",
+      "updated_at": null
+    },
+    "orders": {
+      "id": "39899563-c785-460e-b874-e0509e4f57e6",
+      "group_id": "02eb83b6-382b-4e0a-bddf-d737f80c95b6",
+      "user_id": "9e269d1f-daad-4b8c-b8a5-e414162c293a",
+      "product_name": "Whey protein max performance powder",
+      "product_slug": "whey-protein-max-performance-powder",
+      "product_image": "http://localhost:5000/images/protien.webp-1709143700656.webp",
+      "product_brand_name": "brand name",
+      "product_description": "Protein powders are nutritional supplements that may help build muscle, repair tissue, and make enzymes and hormones. Using protein powder may also aid weight loss and help people tone their muscles.\n\nThere are many different types of protein powder, including dairy-based and plant-based powders. In this article, we discuss some of the health benefits of protein powder and the different types available.",
+      "product_quantity": 1,
+      "product_variation_combinations": {
+        "Weight": "250g",
+        "Flavour": "Chocolate"
+      },
+      "product_variation_discount": 5,
+      "product_variation_price": 2250
+    }
+  },
+  {
+    "order_details": {
+      "id": "02eb83b6-382b-4e0a-bddf-d737f80c95b6",
+      "user_id": "9e269d1f-daad-4b8c-b8a5-e414162c293a",
+      "sub_total": 9250,
+      "discount": 1867,
+      "coupon_code": "",
+      "coupon_discount": 0,
+      "gst": 92.5,
+      "total": 7475.5,
+      "shipping_address_name": "Vishal Kamath",
+      "shipping_address_street_address": "304, 3rd floor, Amartaru 5,\nNew Nagardas Road",
+      "shipping_address_city": "Mumbai",
+      "shipping_address_state": "Maharashtra",
+      "shipping_address_zip": "400069",
+      "shipping_address_country": "India",
+      "shipping_address_tel": "+919819313999",
+      "shipping_address_email": "vishalkamath853@gmail.com",
+      "billing_address_name": "Vishal Kamath",
+      "billing_address_street_address": "304, 3rd floor, Amartaru 5,\nNew Nagardas Road",
+      "billing_address_city": "Mumbai",
+      "billing_address_state": "Maharashtra",
+      "billing_address_zip": "400069",
+      "billing_address_country": "India",
+      "billing_address_tel": "+919819313999",
+      "billing_address_email": "vishalkamath853@gmail.com",
+      "created_at": "2024-03-05T12:32:30.000Z",
+      "updated_at": null
+    },
+    "orders": {
+      "id": "48389589-9a76-4714-88c0-ad8734425f50",
+      "group_id": "02eb83b6-382b-4e0a-bddf-d737f80c95b6",
+      "user_id": "9e269d1f-daad-4b8c-b8a5-e414162c293a",
+      "product_name": "Whey protein max performance powder",
+      "product_slug": "whey-protein-max-performance-powder",
+      "product_image": "http://localhost:5000/images/protien.webp-1709143700656.webp",
+      "product_brand_name": "brand name",
+      "product_description": "Protein powders are nutritional supplements that may help build muscle, repair tissue, and make enzymes and hormones. Using protein powder may also aid weight loss and help people tone their muscles.\n\nThere are many different types of protein powder, including dairy-based and plant-based powders. In this article, we discuss some of the health benefits of protein powder and the different types available.",
+      "product_quantity": 2,
+      "product_variation_combinations": {
+        "Weight": "500g",
+        "Flavour": "Chocolate"
+      },
+      "product_variation_discount": 2.12,
+      "product_variation_price": 3500
+    }
+  }
+]

@@ -27,6 +27,7 @@ const handleFetchEmployeeDetailsForAdmin = async (
         email: employeedetails.email,
         username: employeedetails.username,
         role: getRole(employeedetails.role),
+        status: employeedetails.status,
         created_at: employeedetails.created_at,
         updated_at: employeedetails.updated_at,
       },

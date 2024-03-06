@@ -68,20 +68,19 @@ function initGoogle() {
             .where(eq(users.email, profile.emails[0].value));
           return done(null, userExist);
         }
-
+        console.log("working");
         // create user
         const id = uuid();
-        const newUser = (
-          await db.insert(users).values({
-            id,
-            username: profile.displayName,
-            email: profile.emails[0].value,
-            emailVerified: String(profile.emails[0].verified) === "true",
-            password: "google-auth",
-            googleId: profile.id,
-            image: profile.photos[0].value,
-          })
-        )[0];
+        const newUser = {
+          id,
+          username: profile.displayName,
+          email: profile.emails[0].value,
+          emailVerified: String(profile.emails[0].verified) === "true",
+          password: "google-auth",
+          googleId: profile.id,
+          image: profile.photos[0].value,
+        };
+        await db.insert(users).values(newUser);
 
         return done(null, newUser);
       }

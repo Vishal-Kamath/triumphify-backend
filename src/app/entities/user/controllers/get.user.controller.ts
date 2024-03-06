@@ -22,8 +22,10 @@ const handleGetUser = async (
         .send({ description: "User not found", type: "error" });
     }
 
+    let needs_to_reset_password = user.password === "google-auth";
+
     return res.status(200).send({
-      data: _.omit(user, ["password"]),
+      data: { ..._.omit(user, ["password"]), needs_to_reset_password },
       type: "success",
     });
   } catch (err) {

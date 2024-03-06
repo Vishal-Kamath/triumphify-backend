@@ -7,3 +7,9 @@ dist
 
 # Migration
 drizzle
+
+# cdn
+public
+
+# logs
+logs

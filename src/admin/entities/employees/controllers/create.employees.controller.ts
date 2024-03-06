@@ -7,13 +7,16 @@ import { v4 as uuid } from "uuid";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { env } from "@/config/env.config";
+import { TokenPayload } from "@/admin/utils/jwt.utils";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleCreateEmployee = async (
-  req: Request<{}, {}, ReqEmployee>,
+  req: Request<{}, {}, ReqEmployee & TokenPayload>,
   res: Response
 ) => {
   try {
-    const { email, username, password, role } = req.body;
+    const { email, username, password, role, token } = req.body;
 
     const employeeExists = (
       await db.select().from(employee).where(eq(employee.email, email))
@@ -32,8 +35,14 @@ const handleCreateEmployee = async (
       username,
       password: hashedPassword,
       role: role === "admin" ? env.ADMIN : env.EMPLOYEE,
+      status: "active",
     });
 
+    CSVLogger.succes(
+      token.id,
+      getRole(token.role),
+      `created a new employee ${role}:${username}`
+    );
     return res.status(201).send({
       title: "Employee Created!!",
       description: `Employee with username ${username} successfully created!!`,
@@ -41,7 +50,9 @@ const handleCreateEmployee = async (
     });
   } catch (err) {
     Logger.error("handle create employees error", err);
-    res.status(500).json({ description: "internal server error", type: "error" });
+    res
+      .status(500)
+      .json({ description: "internal server error", type: "error" });
   }
 };
 

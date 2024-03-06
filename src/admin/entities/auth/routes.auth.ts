@@ -5,6 +5,7 @@ import validateResources, {
 import { employeeEmail, login } from "./validators.auth";
 import authControllers from "@admin/entities/auth/controllers/index.auth.controller";
 import { resetPassword } from "@/app/entities/auth/validators.user";
+import validateEmployee from "@/admin/middlewares/validateEmployee";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.post(
   authControllers.handleLogin
 );
 
-router.get("/signout", authControllers.handleSignOut);
+router.get("/signout", validateEmployee, authControllers.handleSignOut);
 
 router.post(
   "/password/send-reset-link",

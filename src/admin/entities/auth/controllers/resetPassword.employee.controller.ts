@@ -7,6 +7,8 @@ import { otpVerification, employee } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { addTokens, removeTokens } from "../utils/auth";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleResetPassword = async (
   req: Request<{}, {}, ResetPasswordType>,
@@ -66,6 +68,12 @@ const handleResetPassword = async (
 
     removeTokens(res);
     addTokens(res, findEmployee.id, findEmployee.role);
+
+    CSVLogger.succes(
+      findEmployee.id,
+      getRole(findEmployee.role),
+      "Password reset"
+    );
     res.status(200).json({
       title: "Password reset successfully",
       description: "You have been logged back in successfully!",

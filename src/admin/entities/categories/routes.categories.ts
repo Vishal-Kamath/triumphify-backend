@@ -3,18 +3,30 @@ import categoriesController from "./controllers/index.categories.controller";
 import validateResources, {
   blankSchema,
 } from "@/admin/middlewares/validateResources";
-import { category } from "./validators.catrgories";
+import { category, categoryUpdate } from "./validators.catrgories";
+import { z } from "zod";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("categories");
-});
+router
+  .route("/")
+  .get(categoriesController.handleGetAllCategories)
+  .post(
+    validateResources(blankSchema, category, blankSchema),
+    categoriesController.handleCreateCategory
+  );
 
-router.post(
-  "/",
-  validateResources(blankSchema, category, blankSchema),
-  categoriesController.handleCreateCategory
-);
+router
+  .route("/:id")
+  .get(categoriesController.handleGetCategoryById)
+  .put(
+    validateResources(
+      z.object({ id: z.string() }),
+      categoryUpdate,
+      blankSchema
+    ),
+    categoriesController.handleUpdateCategory
+  )
+  .delete(categoriesController.handleDeleteCategory);
 
 export default router;

@@ -7,15 +7,30 @@ import { envsafe, port, str } from "envsafe";
 
 export const env = envsafe({
   PORT: port({
-    devDefault: 3500,
+    devDefault: 4000,
     desc: "The port the app is running on",
     example: 80,
   }),
   ADMIN_PORT: port({
-    devDefault: 3500,
-    desc: "The port the app is running on",
+    devDefault: 4500,
+    desc: "The port the admin is running on",
     example: 80,
   }),
+  CDN_PORT: port({
+    devDefault: 5000,
+    desc: "The port the cdn is running on",
+    example: 80,
+  }),
+
+  // endpoints
+  APP_ENDPOINT: str(),
+  ADMIN_ENDPOINT: str(),
+  CDN_ENDPOINT: str(),
+
+  // websites
+  APP_WEBSITE: str(),
+  ADMIN_WEBSITE: str(),
+
   NODE_ENV: str({
     devDefault: "development",
     choices: ["development", "production"],

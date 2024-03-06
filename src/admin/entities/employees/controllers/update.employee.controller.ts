@@ -5,6 +5,8 @@ import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleUpdateEmployee = async (
   req: Request<{}, {}, Employeedetails & TokenPayload>,
@@ -28,13 +30,16 @@ const handleUpdateEmployee = async (
       .set({ username, email })
       .where(eq(employee.id, id));
 
-    return res
-      .status(200)
-      .send({
-        title: "Success",
-        description: "Employee updated successfully",
-        type: "success",
-      });
+    CSVLogger.succes(
+      findEmployee.id,
+      getRole(findEmployee.role),
+      "update profile"
+    );
+    return res.status(200).send({
+      title: "Success",
+      description: "Employee updated successfully",
+      type: "success",
+    });
   } catch (err) {
     Logger.error("handle update employee error", err);
     res

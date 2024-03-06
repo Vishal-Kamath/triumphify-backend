@@ -7,17 +7,24 @@ import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
 
 import authRoutes from "@app/entities/auth/routes.auth";
+import bannerRoutes from "@app/entities/banners/routes.banner";
+import categoryRoutes from "@app/entities/categories/routes.categories";
+import productsRoutes from "@app/entities/products/routes.products";
+import wishlistRoutes from "@app/entities/wishlist/routes.wishlist";
+import cartRoutes from "@app/entities/cart/routes.cart";
+import addressRoutes from "@app/entities/address/routes.address";
+import ordersRoutes from "@app/entities/orders/routes.orders";
 import userRoutes from "@app/entities/user/route.user";
 import userProtectedRoutes from "@app/entities/user/protected.routes.user";
-import validateUser from "./middlewares/validateUser";
-import initPassport from "./entities/auth/config/passport.config";
+import validateUser from "@app/middlewares/validateUser";
+import initPassport from "@app/entities/auth/config/passport.config";
 
 const app = express();
 const PORT = env.PORT || 4000;
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [env.APP_WEBSITE],
     credentials: true,
   })
 );
@@ -36,6 +43,9 @@ app.use(Logger.requestLogger);
 initPassport(app);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/banners", bannerRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productsRoutes);
 
 // -------------------------------------------------
 // Protected Routes
@@ -43,6 +53,10 @@ app.use("/api/user", userRoutes);
 app.use(validateUser);
 
 app.use("/api/user", userProtectedRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/address", addressRoutes);
+app.use("/api/orders", ordersRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {

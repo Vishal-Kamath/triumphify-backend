@@ -9,25 +9,31 @@ import cors from "cors";
 import userRouter from "@admin/entities/user/routes.user";
 import authRouter from "@admin/entities/auth/routes.auth";
 
-import adminEmployeeRoutes from "@admin/entities/employees/routes.admin.employee";
+import superadminEmployeeRoutes from "@admin/entities/employees/routes.superadmin.employee";
 import employeeRoutes from "@admin/entities/employees/routes.employee";
 import categoriesRoutes from "@admin/entities/categories/routes.categories";
-import validateEmployee from "./middlewares/validateEmployee";
-import validateAdmin from "./middlewares/validateAdmin";
+import attributesRoutes from "@admin/entities/attributes/routes.attributes";
+import productsRoutes from "@admin/entities/products/routes.products";
+import bannersRoutes from "@admin/entities/banners/routes.banners";
+import showcaseRoutes from "@admin/entities/showcase/routes.showcase";
+import ordersRoutes from "@admin/entities/orders/routes.orders";
+import validateEmployee from "@admin/middlewares/validateEmployee";
+import validateAdmin from "@admin/middlewares/validateAdmin";
+import validateSuperAdmin from "@admin/middlewares/validateSuperAdmin";
 
 const app = express();
 const PORT = env.ADMIN_PORT || 4500;
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [env.ADMIN_WEBSITE],
     credentials: true,
   })
 );
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 
 // request logger
@@ -45,11 +51,21 @@ app.use("/api/user", userRouter);
 app.use(validateEmployee);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/categories", categoriesRoutes);
+app.use("/api/attributes", attributesRoutes);
+app.use("/api/products", productsRoutes);
+app.use("/api/banners", bannersRoutes);
+app.use("/api/showcases", showcaseRoutes);
+app.use("/api/orders", ordersRoutes);
+
 // -------------------------------------------------
 // Protected Routes (Admin)
 // -------------------------------------------------
 app.use(validateAdmin);
-app.use("/api/employees", adminEmployeeRoutes);
+// -------------------------------------------------
+// Protected Routes (Superdmin)
+// -------------------------------------------------
+app.use(validateSuperAdmin);
+app.use("/api/employees", superadminEmployeeRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {

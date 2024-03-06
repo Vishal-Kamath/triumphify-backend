@@ -15,7 +15,7 @@ async function initSuperAdmin() {
   )[0];
   if (superAdminExists) {
     Logger.info("Super admin email already exists");
-    return;
+    return process.exit(0);
   }
 
   await db.insert(employee).values({
@@ -23,10 +23,11 @@ async function initSuperAdmin() {
     email: env.SUPER_ADMIN_EMAIL,
     password: env.SUPER_ADMIN_PASSWORD_HASH,
     role: env.SUPERADMIN,
+    status: "active",
     username: "Superadmin",
   });
   Logger.success("Super admin created successfully");
-  return;
+  return process.exit(0);
 }
 
 initSuperAdmin();

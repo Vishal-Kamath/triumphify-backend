@@ -8,6 +8,7 @@ import sendEmail from "@/utils/mailer/mailer";
 import { resetPasswordFormat } from "@/utils/mailer/resetPassword";
 import { generateOTP } from "@/utils/otp.utils";
 import { signToken } from "@/app/utils/jwt.utils";
+import { env } from "@/config/env.config";
 
 const handleSendResetPasswordLink = async (
   req: Request<{}, {}, UserEmail>,
@@ -54,7 +55,7 @@ const handleSendResetPasswordLink = async (
       email: fetchUser.email,
       subject: "Reset Password",
       message: resetPasswordFormat(
-        `http://localhost:3000/auth/reset-password?token=${token}&otp=${otp}`
+        `${env.APP_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`
       ),
     });
 
