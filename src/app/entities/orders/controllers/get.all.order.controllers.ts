@@ -2,20 +2,48 @@ import { TokenPayload } from "@/app/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
-import { eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleGetAllOrders = async (
-  req: Request<{}, {}, TokenPayload>,
+  req: Request<
+    { type: "history" | "cancelled" | "returned" },
+    {},
+    TokenPayload
+  >,
   res: Response
 ) => {
   try {
+    const { type } = req.params;
     const { id } = req.body.token;
 
-    const ordersList = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.user_id, id));
+    const condition =
+      type === "history"
+        ? or(
+            and(
+              eq(orders.user_id, id),
+              eq(orders.cancelled, false),
+              eq(orders.returned, false)
+            ),
+            and(
+              eq(orders.user_id, id),
+              eq(orders.cancelled, true),
+              eq(orders.returned, true)
+            )
+          )
+        : type === "cancelled"
+        ? and(
+            eq(orders.user_id, id),
+            eq(orders.cancelled, true),
+            eq(orders.returned, false)
+          )
+        : and(
+            eq(orders.user_id, id),
+            eq(orders.cancelled, false),
+            eq(orders.returned, true)
+          );
+
+    const ordersList = await db.select().from(orders).where(condition);
 
     res.status(200).send({ data: ordersList, type: "success" });
   } catch (err) {

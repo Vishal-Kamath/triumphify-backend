@@ -9,10 +9,11 @@ const router = Router();
 
 router
   .route("/")
-  .get(orderControllers.handleGetAllOrders)
   .post(
     validateResources(blankSchema, placeOrders, blankSchema),
     orderControllers.handlePlaceOrders
   );
+
+router.route("/:type").get(orderControllers.handleGetAllOrders);
 
 export default router;

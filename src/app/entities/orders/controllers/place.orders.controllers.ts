@@ -3,6 +3,7 @@ import { RequestPlaceOrders } from "../validators.orders";
 import { TokenPayload } from "@/app/utils/jwt.utils";
 import { db } from "@/lib/db";
 import {
+  DbOrders,
   addresses,
   cart,
   order_details,
@@ -13,6 +14,7 @@ import {
 import { and, eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { Cart } from "@/lib/@types/cart";
+import { Logger } from "@/utils/logger";
 
 function getTotals(cart: Cart[]) {
   const subTotal = parseFloat(
@@ -182,7 +184,13 @@ const handlePlaceOrders = async (
           product_variation_combinations: cart.variation.combinations,
           product_variation_price: cart.variation.price,
           product_variation_discount: cart.variation.discount,
-        }))
+
+          status: "pending",
+          cancelled: false,
+          request_cancel: false,
+          request_return: false,
+          returned: false,
+        })) as DbOrders[]
       );
 
       // update product variations
@@ -204,6 +212,7 @@ const handlePlaceOrders = async (
       type: "success",
     });
   } catch (err) {
+    Logger.error("handle place orders error", err);
     return res.status(500).send({
       description: "Something went wrong",
       type: "error",

@@ -42,7 +42,7 @@ app.use(Logger.requestLogger);
 // -------------------------------------------------
 initPassport(app);
 app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
+app.use(" ", userRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productsRoutes);

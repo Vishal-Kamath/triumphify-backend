@@ -4,6 +4,7 @@ import { ReqUpdateProduct } from "../validators.products";
 import slugify from "slugify";
 import { db } from "@/lib/db";
 import {
+  cart,
   product_attributes,
   product_variations,
   products,
@@ -159,11 +160,19 @@ const handleUpdateProduct = async (
                 await tx.insert(product_attributes).values(attribute);
               }
 
+              // delete carts with this variation
+              for (const variation of deletedVariations) {
+                await tx
+                  .delete(cart)
+                  .where(eq(cart.product_variation_id, variation.id));
+              }
+
               for (const variation of deletedVariations) {
                 await tx
                   .delete(product_variations)
                   .where(eq(product_variations.id, variation.id));
               }
+
               for (const variation of updatedVariations) {
                 await tx
                   .update(product_variations)

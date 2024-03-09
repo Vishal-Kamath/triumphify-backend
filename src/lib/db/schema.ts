@@ -364,6 +364,27 @@ export const orders = mysqlTable("orders", {
   product_variation_discount: float("product_variation_discount").notNull(),
   product_variation_price: float("product_variation_price").notNull(),
 
+  // order statuses
+  request_cancel: boolean("request_cancel"),
+  request_return: boolean("request_return"),
+  cancelled: boolean("cancelled"),
+  returned: boolean("returned"),
+
+  status: mysqlEnum("status", [
+    // order status
+    "pending",
+    "confirmed",
+    "out for delivery",
+    "delivered",
+
+    // return status
+    "return approved",
+    "out for pickup",
+    "picked up",
+    "refunded",
+  ]).notNull(),
+
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
+export type DbOrders = typeof orders.$inferSelect;

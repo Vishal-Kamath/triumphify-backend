@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { order_details, orders } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
-import { and, eq, ne } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleGetByIdOrdersControllers = async (
@@ -34,15 +34,15 @@ const handleGetByIdOrdersControllers = async (
         .send({ description: "Order not found", type: "error" });
     }
 
-    const otherOrders = await db
+    const allOrders = await db
       .select()
       .from(orders)
-      .where(and(ne(orders.id, orderId), eq(orders.group_id, order.group_id)));
+      .where(eq(orders.group_id, order.group_id));
 
     const data = {
       order,
       order_details: ordersDetails,
-      other_orders: otherOrders,
+      all_orders: allOrders,
     };
 
     res.status(200).send({
