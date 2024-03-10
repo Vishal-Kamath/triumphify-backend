@@ -410,6 +410,10 @@ export const reviews = mysqlTable(
       length: 750,
     }).notNull(),
 
+    status: mysqlEnum("status", ["pending", "approved", "rejected"])
+      .default("pending")
+      .notNull(),
+
     created_at: timestamp("created_at").notNull().defaultNow(),
     updated_at: timestamp("updated_at").onUpdateNow(),
   },
