@@ -1,4 +1,3 @@
-import { table } from "console";
 import {
   mysqlTable,
   timestamp,
@@ -352,6 +351,7 @@ export const orders = mysqlTable("orders", {
     .references(() => users.id),
 
   // product details
+  product_id: varchar("product_id", { length: 36 }).notNull(),
   product_name: varchar("product_name", { length: 100 }).notNull(),
   product_slug: varchar("product_slug", { length: 100 }).notNull(),
   product_image: varchar("product_image", { length: 350 }),

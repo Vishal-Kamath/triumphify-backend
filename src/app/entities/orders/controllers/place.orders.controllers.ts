@@ -163,6 +163,7 @@ const handlePlaceOrders = async (
           group_id: order_group_id,
           user_id: id,
 
+          product_id: cart.product.id,
           product_name: cart.product.name,
           product_brand_name: cart.product.brand_name,
           product_slug: cart.product.slug,
