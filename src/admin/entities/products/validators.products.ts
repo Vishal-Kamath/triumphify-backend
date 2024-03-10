@@ -13,7 +13,6 @@ export const product = z.object({
   brand_name: z.string().trim().max(100),
   category_id: z.string().refine((data) => !!data.trim(), "Field is required"),
 
-  gst_price: z.number(),
   description: z.string().max(750),
   // description
   product_accordians: z.array(
@@ -70,7 +69,6 @@ export const updateProduct = z.object({
   brand_name: z.string().trim().max(100),
   category_id: z.string().refine((data) => !!data.trim(), "Field is required"),
 
-  gst_price: z.number(),
   description: z.string().max(750),
   // description
   product_accordians: z.array(

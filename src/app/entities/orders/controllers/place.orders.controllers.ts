@@ -38,19 +38,9 @@ function getTotals(cart: Cart[]) {
       .toFixed(2)
   );
 
-  const gst = parseFloat(
-    cart
-      .reduce(
-        (gst, curr) =>
-          gst +
-          (curr.product.gst_price / 100) * curr.variation.price * curr.quantity,
-        0
-      )
-      .toFixed(2)
-  );
-  const total = subTotal - discount + gst;
+  const total = subTotal - discount;
 
-  return { subTotal, gst, discount, total };
+  return { subTotal, discount, total };
 }
 
 const handlePlaceOrders = async (
@@ -132,7 +122,7 @@ const handlePlaceOrders = async (
       });
     }
 
-    const { subTotal, gst, discount, total } = getTotals(newCarts);
+    const { subTotal, discount, total } = getTotals(newCarts);
 
     await db.transaction(async (trx) => {
       // create order details
@@ -145,7 +135,6 @@ const handlePlaceOrders = async (
         discount,
         coupon_code: "",
         coupon_discount: 0,
-        gst,
         total,
 
         shipping_address_name: findShippingAddress.name,

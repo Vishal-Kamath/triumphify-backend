@@ -17,7 +17,6 @@ const handleGetProduct = async (
           slug: products.slug,
           brand_name: products.brand_name,
           category: categories.name,
-          gst_price: products.gst_price,
           description: products.description,
           product_accordians: products.product_accordians,
           product_images: products.product_images,

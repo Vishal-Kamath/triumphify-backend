@@ -48,7 +48,7 @@ const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
     Logger.error("handle Login error", err);
     return res
       .status(500)
-      .send({ message: "Internal server error", type: "error" });
+      .send({ description: "Internal server error", type: "error" });
   }
 };
 

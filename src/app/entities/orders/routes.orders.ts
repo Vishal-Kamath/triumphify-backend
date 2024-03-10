@@ -15,5 +15,6 @@ router
   );
 
 router.route("/:type").get(orderControllers.handleGetAllOrders);
+router.route("/details/:orderId").get(orderControllers.handleGetOrderById);
 
 export default router;

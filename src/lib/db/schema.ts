@@ -131,7 +131,6 @@ export const products = mysqlTable("products", {
     .notNull()
     .references(() => categories.id),
 
-  gst_price: float("gst_price").notNull(),
   description: varchar("description", { length: 750 }),
   product_accordians: json("product_accordians").notNull(),
   product_images: json("product_images").notNull(),
@@ -283,7 +282,6 @@ export const order_details = mysqlTable("order_details", {
   discount: float("discount").notNull(),
   coupon_code: varchar("coupon_code", { length: 100 }),
   coupon_discount: float("coupon_discount"),
-  gst: float("gst").notNull(),
   total: float("total").notNull(),
 
   // shipping address info

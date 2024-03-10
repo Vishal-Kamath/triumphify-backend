@@ -13,7 +13,6 @@ const handleGetProducts = async (req: Request, res: Response) => {
         slug: products.slug,
         brand_name: products.brand_name,
         category: categories.name,
-        gst_price: products.gst_price,
         product_images: products.product_images,
         meta_title: products.meta_title,
         meta_description: products.meta_description,

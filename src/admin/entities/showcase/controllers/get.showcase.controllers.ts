@@ -12,7 +12,6 @@ const handleGetAllProductShowcase = async (req: Request, res: Response) => {
         name: products.name,
         slug: products.slug,
         brand_name: products.brand_name,
-        gst_price: products.gst_price,
         product_images: products.product_images,
         showcases: count(product_showcase.id),
 

@@ -9,7 +9,6 @@ export interface Product {
     title: string;
     description: string;
   }[];
-  gst_price: number;
   product_images: string[];
 
   meta_title: string;
