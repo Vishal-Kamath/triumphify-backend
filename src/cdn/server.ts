@@ -7,6 +7,7 @@ import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
 
 import imageRoutes from "@cdn/entities/image/routes.image";
+import { healthCheck } from "@/utils/healthcheck";
 
 const app = express();
 const PORT = env.CDN_PORT || 5000;
@@ -27,6 +28,7 @@ app.use(cookieParser());
 // request logger
 app.use(Logger.requestLogger);
 
+app.get("/", healthCheck("hello from Triumphify cdn server"));
 // -------------------------------------------------
 // Protected Routes
 // -------------------------------------------------

@@ -20,6 +20,7 @@ import ordersRoutes from "@admin/entities/orders/routes.orders";
 import validateEmployee from "@admin/middlewares/validateEmployee";
 import validateAdmin from "@admin/middlewares/validateAdmin";
 import validateSuperAdmin from "@admin/middlewares/validateSuperAdmin";
+import { healthCheck } from "@/utils/healthcheck";
 
 const app = express();
 const PORT = env.ADMIN_PORT || 4500;
@@ -39,6 +40,7 @@ app.use(cookieParser());
 // request logger
 app.use(Logger.requestLogger);
 
+app.get("/", healthCheck("hello from Triumphify admin server"));
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------

@@ -18,6 +18,7 @@ import userRoutes from "@app/entities/user/route.user";
 import userProtectedRoutes from "@app/entities/user/protected.routes.user";
 import validateUser from "@app/middlewares/validateUser";
 import initPassport from "@app/entities/auth/config/passport.config";
+import { healthCheck } from "@/utils/healthcheck";
 
 const app = express();
 const PORT = env.PORT || 4000;
@@ -37,12 +38,13 @@ app.use(cookieParser());
 // request logger
 app.use(Logger.requestLogger);
 
+app.get("/", healthCheck("hello from Triumphify server"))
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------
 initPassport(app);
 app.use("/api/auth", authRoutes);
-app.use(" ", userRoutes);
+// app.use(" ", userRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productsRoutes);
