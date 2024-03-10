@@ -269,7 +269,7 @@ export const cart = mysqlTable("carts", {
 });
 
 // -------------------------------------------------
-// Payment
+// Order_details
 // -------------------------------------------------
 export const order_details = mysqlTable("order_details", {
   id: varchar("id", { length: 36 }).notNull().primaryKey(),
@@ -338,6 +338,9 @@ export const order_details = mysqlTable("order_details", {
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
 
+// -------------------------------------------------
+// Orders
+// -------------------------------------------------
 export const orders = mysqlTable("orders", {
   id: varchar("id", { length: 36 }).notNull().primaryKey(),
   group_id: varchar("group_id", { length: 36 })
@@ -386,3 +389,23 @@ export const orders = mysqlTable("orders", {
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
 export type DbOrders = typeof orders.$inferSelect;
+
+// -------------------------------------------------
+// Reviews
+// -------------------------------------------------
+export const reviews = mysqlTable("reviews", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+  user_id: varchar("user_id", { length: 36 })
+    .notNull()
+    .references(() => users.id),
+  product_id: varchar("product_id", { length: 36 })
+    .notNull()
+    .references(() => products.id),
+
+  rating: int("rating").notNull(),
+  review_title: varchar("review_title", {length: 100}).notNull(),
+  review_description: varchar("review_description", {length: 750}).notNull(),
+
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").onUpdateNow(),
+});
