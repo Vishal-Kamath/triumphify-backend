@@ -7,6 +7,7 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { v4 as uuid } from "uuid";
 import session from "express-session";
+import { welcomeToTriumphifyCourier } from "@/utils/courier/welcome";
 
 export default function initPassport(app: Express) {
   app.use(
@@ -68,7 +69,6 @@ function initGoogle() {
             .where(eq(users.email, profile.emails[0].value));
           return done(null, userExist);
         }
-        console.log("working");
         // create user
         const id = uuid();
         const newUser = {
@@ -81,6 +81,12 @@ function initGoogle() {
           image: profile.photos[0].value,
         };
         await db.insert(users).values(newUser);
+        await welcomeToTriumphifyCourier({
+          email: newUser.email,
+          data: {
+            userName: newUser.username,
+          },
+        });
 
         return done(null, newUser);
       }

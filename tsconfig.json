@@ -11,6 +11,7 @@
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@admin/*": ["./src/admin/*"],
+      "@admin-old/*": ["./src/admin-old/*"],
       "@cdn/*": ["./src/cdn/*"]
     },
     "rootDir": "./src",

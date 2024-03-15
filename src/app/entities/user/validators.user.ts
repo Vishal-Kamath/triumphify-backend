@@ -4,6 +4,11 @@ import { TypeOf, z } from "zod";
 export const userDetailsSchema = z.object({
   username: z.string().trim().min(3).max(50),
   email: z.string().email().trim().min(1).max(100),
+  tel: z
+    .string()
+    .max(100)
+    // .refine((val) => val.toString().length > 9, "Incorrect phone number")
+    .refine((val) => !Number.isNaN(Number(val)), "Invalid input"),
   gender: z.enum(["Male", "Female", "Other"]),
   dateOfBirth: z
     .string()

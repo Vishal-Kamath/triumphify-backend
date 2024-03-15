@@ -30,6 +30,7 @@ export const users = mysqlTable("users", {
   id: varchar("id", { length: 36 }).notNull().primaryKey(),
   email: varchar("email", { length: 100 }).notNull().unique(),
   emailVerified: boolean("emailVerified"),
+  tel: varchar("tel", { length: 100 }),
   username: varchar("username", { length: 50 }),
   dateOfBirth: varchar("dateOfBirth", { length: 100 }),
   gender: mysqlEnum("gender", ["Male", "Female", "Other"]),
@@ -364,11 +365,18 @@ export const orders = mysqlTable("orders", {
     "product_variation_combinations"
   ).notNull(),
   product_variation_discount: float("product_variation_discount").notNull(),
+  product_variation_discount_price: float(
+    "product_variation_discount_price"
+  ).notNull(),
+  product_variation_discount_final_price: float(
+    "product_variation_discount_final_price"
+  ).notNull(),
   product_variation_price: float("product_variation_price").notNull(),
+  product_variation_final_price: float(
+    "product_variation_final_price"
+  ).notNull(),
 
   // order statuses
-  request_cancel: boolean("request_cancel"),
-  request_return: boolean("request_return"),
   cancelled: boolean("cancelled"),
   returned: boolean("returned"),
 
@@ -392,35 +400,55 @@ export const orders = mysqlTable("orders", {
 export type DbOrders = typeof orders.$inferSelect;
 
 // -------------------------------------------------
-// Reviews
+// Order Request
 // -------------------------------------------------
-export const reviews = mysqlTable(
-  "reviews",
+export const order_cancel_return_request = mysqlTable(
+  "order_cancel_return_request",
   {
+    id: varchar("id", { length: 36 }).notNull().primaryKey(),
+    order_id: varchar("order_id", { length: 36 })
+      .notNull()
+      .references(() => orders.id),
+
     user_id: varchar("user_id", { length: 36 })
       .notNull()
       .references(() => users.id),
-    product_id: varchar("product_id", { length: 36 })
-      .notNull()
-      .references(() => products.id),
 
-    rating: int("rating").notNull(),
-    review_title: varchar("review_title", { length: 100 }).notNull(),
-    review_description: varchar("review_description", {
-      length: 750,
-    }).notNull(),
-
+    type: mysqlEnum("type", ["cancel", "return"]).notNull(),
+    reason: varchar("reason", { length: 750 }).notNull(),
     status: mysqlEnum("status", ["pending", "approved", "rejected"])
-      .default("pending")
-      .notNull(),
+      .notNull()
+      .default("pending"),
 
     created_at: timestamp("created_at").notNull().defaultNow(),
-    updated_at: timestamp("updated_at").onUpdateNow(),
-  },
-  (table) => ({
-    unique_user_product_id: primaryKey({
-      name: "unique_user_product_id",
-      columns: [table.user_id, table.product_id],
-    }),
-  })
+    update_at: timestamp("update_at").onUpdateNow(),
+  }
 );
+
+// -------------------------------------------------
+// Reviews
+// -------------------------------------------------
+export const reviews = mysqlTable("reviews", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+  user_id: varchar("user_id", { length: 36 })
+    .notNull()
+    .references(() => users.id),
+  product_id: varchar("product_id", { length: 36 })
+    .notNull()
+    .references(() => products.id),
+
+  pinned: boolean("pinned").notNull().default(true),
+
+  rating: int("rating").notNull(),
+  review_title: varchar("review_title", { length: 100 }).notNull(),
+  review_description: varchar("review_description", {
+    length: 750,
+  }).notNull(),
+
+  status: mysqlEnum("status", ["pending", "approved", "rejected"])
+    .default("pending")
+    .notNull(),
+
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").onUpdateNow(),
+});

@@ -10,6 +10,7 @@ import authRoutes from "@app/entities/auth/routes.auth";
 import bannerRoutes from "@app/entities/banners/routes.banner";
 import categoryRoutes from "@app/entities/categories/routes.categories";
 import productsRoutes from "@app/entities/products/routes.products";
+import productsProtectedRoutes from "@app/entities/products/routes.protected.products";
 import wishlistRoutes from "@app/entities/wishlist/routes.wishlist";
 import cartRoutes from "@app/entities/cart/routes.cart";
 import addressRoutes from "@app/entities/address/routes.address";
@@ -38,7 +39,7 @@ app.use(cookieParser());
 // request logger
 app.use(Logger.requestLogger);
 
-app.get("/", healthCheck("hello from Triumphify server"))
+app.get("/", healthCheck("hello from Triumphify server"));
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------
@@ -59,6 +60,8 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/products", productsProtectedRoutes);
+
 
 // 404
 app.all("*", (req: Request, res: Response) => {

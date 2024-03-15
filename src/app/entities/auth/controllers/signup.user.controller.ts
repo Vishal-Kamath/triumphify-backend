@@ -7,13 +7,14 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import { addTokens } from "../utils/auth";
+import { welcomeToTriumphifyCourier } from "@/utils/courier/welcome";
 
 const handleSignUp = async (
   req: Request<{}, {}, SignupType>,
   res: Response
 ) => {
   try {
-    const { username, email, dateOfBirth, gender, password } = req.body;
+    const { username, email, dateOfBirth, tel, gender, password } = req.body;
 
     // user email exists
     const userExists = (
@@ -32,6 +33,7 @@ const handleSignUp = async (
     const newUser = await db.insert(users).values({
       id,
       email,
+      tel,
       username,
       dateOfBirth,
       gender,
@@ -39,6 +41,12 @@ const handleSignUp = async (
     });
 
     // TODO: send email verification
+    await welcomeToTriumphifyCourier({
+      email,
+      data: {
+        userName: username,
+      },
+    });
 
     addTokens(res, id);
     return res.status(201).json({

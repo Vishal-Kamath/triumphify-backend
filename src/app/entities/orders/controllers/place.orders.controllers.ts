@@ -32,7 +32,7 @@ function getTotals(cart: Cart[]) {
           discount +
           curr.variation.price *
             (curr.variation.discount / 100) *
-            curr.variation.quantity,
+            curr.quantity,
         0
       )
       .toFixed(2)
@@ -173,12 +173,19 @@ const handlePlaceOrders = async (
 
           product_variation_combinations: cart.variation.combinations,
           product_variation_price: cart.variation.price,
+          product_variation_final_price:
+            cart.quantity *
+            cart.variation.price *
+            ((100 - cart.variation.discount) / 100),
           product_variation_discount: cart.variation.discount,
+          product_variation_discount_price:
+            (cart.variation.price * cart.variation.discount) / 100,
+          product_variation_discount_final_price:
+            cart.quantity *
+            ((cart.variation.price * cart.variation.discount) / 100),
 
           status: "pending",
           cancelled: false,
-          request_cancel: false,
-          request_return: false,
           returned: false,
         })) as DbOrders[]
       );

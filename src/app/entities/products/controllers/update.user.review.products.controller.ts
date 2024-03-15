@@ -5,9 +5,8 @@ import { ReqUserReview } from "../validators.products";
 import { db } from "@/lib/db";
 import { reviews } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
-import { v4 as uuid } from "uuid";
 
-const handleCreateUserProductReview = async (
+export const handleUpdateUserProductReview = async (
   req: Request<{ productId: string }, {}, TokenPayload & ReqUserReview>,
   res: Response
 ) => {
@@ -24,34 +23,37 @@ const handleCreateUserProductReview = async (
         .where(and(eq(reviews.user_id, id), eq(reviews.product_id, productId)))
         .limit(1)
     )[0];
-    if (reviewExists) {
+
+    if (!reviewExists) {
       return res
         .status(400)
-        .json({ description: "review already exists", type: "error" });
+        .send({ description: "review doesn't exists", type: "error" });
     }
 
-    // create review
-    await db.insert(reviews).values({
-      id: uuid(),
-      user_id: id,
-      product_id: productId,
-      review_title,
-      review_description,
-      rating,
-    });
+    // update review
+    await db
+      .update(reviews)
+      .set({
+        review_title,
+        review_description,
+        rating,
+        pinned: true,
+        status: "pending",
+      })
+      .where(and(eq(reviews.user_id, id), eq(reviews.product_id, productId)));
 
-    res.status(201).json({
-      title: "Review successfully sent",
+    res.status(200).send({
+      title: "Review successfully updated",
       description:
-        "Thank you for leaving a review, we appretiate your feedback!",
+        "Thank you for updating your review, we appretiate your feedback!",
       type: "success",
     });
   } catch (err) {
     Logger.error("handle create user product review error", err);
     res
       .status(500)
-      .json({ description: "something went wrong", type: "error" });
+      .send({ description: "something went wrong", type: "error" });
   }
 };
 
-export default handleCreateUserProductReview;
+export default handleUpdateUserProductReview;

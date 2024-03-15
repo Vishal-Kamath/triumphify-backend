@@ -1,9 +1,20 @@
 import { eq } from "drizzle-orm";
-import { db } from ".";
 import { employee } from "./schema";
 import { env } from "../../config/env.config";
 import { Logger } from "../../utils/logger";
+import mysql from "mysql2";
+import { drizzle } from "drizzle-orm/mysql2";
 import { v4 as uuid } from "uuid";
+
+const pool = mysql.createPool({
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+  user: env.DB_USER,
+  password: env.DB_PASSWORD,
+  database: env.DB_DATABASE,
+});
+
+const db = drizzle(pool);
 
 async function initSuperAdmin() {
   const superAdminExists = (

@@ -6,3 +6,12 @@ export const placeOrders = z.object({
 });
 
 export type RequestPlaceOrders = z.infer<typeof placeOrders>;
+
+export const requestCancelReturn = z.object({
+  reason: z
+    .string()
+    .max(750)
+    .refine((val) => !!val.trim(), "Field is required"),
+});
+
+export type RequestCancelReturn = z.infer<typeof requestCancelReturn>;

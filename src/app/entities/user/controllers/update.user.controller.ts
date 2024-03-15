@@ -12,7 +12,7 @@ const handleUpdateUser = async (
 ) => {
   try {
     const { id } = req.body.token;
-    const { username, gender, email, dateOfBirth } = req.body;
+    const { username, gender, email, tel, dateOfBirth } = req.body;
 
     const findUser = (
       await db.select().from(users).where(eq(users.id, id)).limit(1)
@@ -28,6 +28,7 @@ const handleUpdateUser = async (
       .set({
         username,
         email,
+        tel,
         emailVerified:
           findUser.email === email ? findUser.emailVerified : false,
         gender,

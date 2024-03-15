@@ -2,7 +2,7 @@ import validateResources, {
   blankSchema,
 } from "@/app/middlewares/validateResources";
 import { Router } from "express";
-import { placeOrders } from "./validators.orders";
+import { placeOrders, requestCancelReturn } from "./validators.orders";
 import orderControllers from "./controllers/index.orders.controllers";
 
 const router = Router();
@@ -14,7 +14,13 @@ router
     orderControllers.handlePlaceOrders
   );
 
-router.route("/:type").get(orderControllers.handleGetAllOrders);
 router.route("/details/:orderId").get(orderControllers.handleGetOrderById);
+router
+  .route("/request/:orderId/cancel")
+  .post(
+    validateResources(blankSchema, requestCancelReturn, blankSchema),
+    orderControllers.handleCancelOrderRequest
+  );
+router.route("/:type").get(orderControllers.handleGetAllOrders);
 
 export default router;

@@ -40,6 +40,9 @@ export const env = envsafe({
   NODEMAILER_EMAIL: str(),
   NODEMAILER_EMAIL_PASSWORD: str(),
 
+  // courier
+  COURIER_AUTH_TOKEN: str(),
+
   // Drizzle config
   DB_HOST: str(),
   DB_PORT: port(),
