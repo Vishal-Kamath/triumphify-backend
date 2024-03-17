@@ -91,7 +91,9 @@ const privilages: Privilage[] = [
       "/users/stats",
 
       "/employees/details",
+      "/employees/details/:id",
       "/employees/logs",
+      "/employees/logs/:name",
       "/employees/create",
       "/employees/leads",
 
