@@ -24,11 +24,11 @@ import validateSuperAdmin from "@admin-old/middlewares/validateSuperAdmin";
 import { healthCheck } from "@/utils/healthcheck";
 
 const app = express();
-const PORT = env.ADMIN_PORT || 4500;
+const PORT = 4501;
 
 app.use(
   cors({
-    origin: [env.ADMIN_WEBSITE],
+    origin: ["http://localhost:3001"],
     credentials: true,
   })
 );
@@ -37,7 +37,6 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
-
 // request logger
 app.use(Logger.requestLogger);
 

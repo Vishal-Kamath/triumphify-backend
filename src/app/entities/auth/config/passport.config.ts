@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { env } from "@/config/env.config";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { leads, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -81,6 +81,14 @@ function initGoogle() {
           image: profile.photos[0].value,
         };
         await db.insert(users).values(newUser);
+        await db.insert(leads).values({
+          id: uuid(),
+          name: newUser.username,
+          email: newUser.email,
+          source: "google-auth",
+          status: "pending",
+          tel: "",
+        });
         await welcomeToTriumphifyCourier({
           email: newUser.email,
           data: {

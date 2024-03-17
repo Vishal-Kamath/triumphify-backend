@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Logger } from "@/utils/logger";
 import { SignupType } from "../validators.user";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { leads, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
@@ -38,6 +38,15 @@ const handleSignUp = async (
       dateOfBirth,
       gender,
       password: hashedPassword,
+    });
+
+    await db.insert(leads).values({
+      id: uuid(),
+      name: username,
+      email: email,
+      source: "website",
+      status: "pending",
+      tel,
     });
 
     // TODO: send email verification

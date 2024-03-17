@@ -33,18 +33,52 @@ app.get("/", healthCheck("hello from Triumphify admin server"));
 // -------------------------------------------------
 // Routes
 // -------------------------------------------------
+import authRouter from "@admin/entities/auth/routes.auth";
+
+app.use("/api/auth", authRouter);
 // -------------------------------------------------
 // Protected Routes (Employee)
 // -------------------------------------------------
+import employeeRoutes from "@admin/entities/employees/routes.employee";
+import userRouter from "@admin/entities/user/routes.user";
+import leadsRouter from "@admin/entities/leads/routes.leads";
+import categoriesRoutes from "@admin/entities/categories/routes.categories";
+import attributesRoutes from "@admin/entities/attributes/routes.attributes";
+import productsRoutes from "@admin/entities/products/routes.products";
+import bannersRoutes from "@admin/entities/banners/routes.banners";
+import showcaseRoutes from "@admin/entities/showcase/routes.showcase";
+import ordersRoutes from "@admin/entities/orders/routes.orders";
+
 app.use(validateEmployee);
+app.use("/api/employees", employeeRoutes);
+app.use("/api/user", userRouter);
+app.use("/api/leads", leadsRouter);
+app.use("/api/categories", categoriesRoutes);
+app.use("/api/attributes", attributesRoutes);
+app.use("/api/products", productsRoutes);
+app.use("/api/banners", bannersRoutes);
+app.use("/api/showcases", showcaseRoutes);
+app.use("/api/employee/orders", ordersRoutes);
+
 // -------------------------------------------------
 // Protected Routes (Admin)
 // -------------------------------------------------
+import adminEmployeeRoutes from "@admin/entities/employees/routes.admin.employees";
+import adminLeadsRouter from "@admin/entities/leads/routes.admin.leads";
+
 app.use(validateAdmin);
+app.use("/api/employees", adminEmployeeRoutes);
+app.use("/api/leads", adminLeadsRouter);
+
 // -------------------------------------------------
 // Protected Routes (Superdmin)
 // -------------------------------------------------
+import superadminEmployeeRoutes from "@admin/entities/employees/routes.superadmin.employee";
+import ordersProtectedRoutes from "@admin/entities/orders/routes.protected.orders";
+
 app.use(validateSuperAdmin);
+app.use("/api/employees", superadminEmployeeRoutes);
+app.use("/api/orders", ordersProtectedRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {
