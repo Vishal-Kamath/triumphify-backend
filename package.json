@@ -13,7 +13,6 @@
     "prod:admin": "cross-env NODE_ENV=production node ./dist/admin/server.js",
     "prod:cdn": "cross-env NODE_ENV=production node ./dist/cdn/server.js",
     "dev:app": "cross-env NODE_ENV=development nodemon ./src/app/server.ts",
-    "dev:admin-old": "cross-env NODE_ENV=development nodemon ./src/admin-old/server.ts",
     "dev:admin": "cross-env NODE_ENV=development nodemon ./src/admin/server.ts",
     "dev:cdn": "cross-env NODE_ENV=development nodemon ./src/cdn/server.ts",
     "migration:generate": "drizzle-kit generate:mysql --schema=./src/lib/db/schema.ts",
@@ -77,7 +76,6 @@
   },
   "_moduleAliases": {
     "@app": "dist/app",
-    "@admin-old": "dist/admin-old",
     "@admin": "dist/admin",
     "@cdn": "dist/cdn",
     "@": "dist"
