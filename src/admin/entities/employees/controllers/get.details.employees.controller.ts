@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 import { employee } from "@/lib/db/schema";
-import { TokenPayload } from "@admin-old/utils/jwt.utils";
+import { TokenPayload } from "@admin/utils/jwt.utils";
 import { Logger } from "@/utils/logger";
 import { Request, Response } from "express";
 import { db } from "@/lib/db";
-import { getRole } from "@admin-old/utils/getRole";
+import { getRole } from "@admin/utils/getRole";
 
 const handleGetEmployeeDetails = async (
   req: Request<{}, {}, TokenPayload>,

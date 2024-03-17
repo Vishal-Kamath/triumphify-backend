@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { Logger } from "@/utils/logger";
-import { signToken } from "@admin-old/utils/jwt.utils";
+import { signToken } from "@admin/utils/jwt.utils";
 
 export const addTokens = (res: Response, id: string, role: string) => {
   try {

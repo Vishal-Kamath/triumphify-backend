@@ -1,6 +1,6 @@
 import validateResources, {
   blankSchema,
-} from "@admin-old/middlewares/validateResources";
+} from "@admin/middlewares/validateResources";
 import { Router } from "express";
 import { zattributes } from "./validators.attributes";
 import attributesControllers from "./controllers/index.attributes.controller";

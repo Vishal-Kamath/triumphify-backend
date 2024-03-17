@@ -2,7 +2,7 @@ import { Router } from "express";
 import productControllers from "./controllers/index.products.controllers";
 import validateResources, {
   blankSchema,
-} from "@admin-old/middlewares/validateResources";
+} from "@admin/middlewares/validateResources";
 import { pinned, product, status, updateProduct } from "./validators.products";
 
 const router = Router();

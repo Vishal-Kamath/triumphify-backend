@@ -1,9 +1,9 @@
 import { Router } from "express";
 import validateResources, {
   blankSchema,
-} from "@admin-old/middlewares/validateResources";
+} from "@admin/middlewares/validateResources";
 import { employeeEmail, login } from "./validators.auth";
-import authControllers from "@admin-old/entities/auth/controllers/index.auth.controller";
+import authControllers from "@admin/entities/auth/controllers/index.auth.controller";
 import { resetPassword } from "@/app/entities/auth/validators.user";
 import validateEmployee from "@/admin/middlewares/validateEmployee";
 
