@@ -16,11 +16,14 @@ export const employee = z.object({
 });
 export type ReqEmployee = z.infer<typeof employee>;
 
-export const employeedetails = z.object({
-  email: z.string().email().trim().min(1).max(100),
+export const employeeUsername = z.object({
   username: z.string().max(50).min(3),
 });
-export type Employeedetails = z.infer<typeof employeedetails>;
+export type EmployeeUsername = z.infer<typeof employeeUsername>;
+export const employeeEmail = z.object({
+  email: z.string().email().trim().min(1).max(100),
+});
+export type EmployeeEmail = z.infer<typeof employeeEmail>;
 
 export const employeeRole = z.object({
   role: z.enum(["admin", "employee"]),

@@ -3,7 +3,7 @@ import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { leads } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { Request, Response } from "express";
 
 interface GetLeadsType {
@@ -20,13 +20,20 @@ interface GetLeadsType {
 }
 
 const handleGetAllLeads = async (
-  req: Request<{}, {}, TokenPayload>,
+  req: Request<
+    {},
+    {},
+    TokenPayload,
+    { status?: "pending" | "converted" | "rejected" }
+  >,
   res: Response
 ) => {
   try {
     const role = getRole(req.body.token.role);
+    const status = req.query.status;
     const { id } = req.body.token;
 
+    const statusCondition = status ? eq(leads.status, status) : undefined;
     const allLeads: GetLeadsType[] =
       role === "employee"
         ? await db
@@ -42,8 +49,8 @@ const handleGetAllLeads = async (
               updated_at: leads.updated_at,
             })
             .from(leads)
-            .where(eq(leads.assigned, id))
-        : await db.select().from(leads);
+            .where(and(eq(leads.assigned, id), statusCondition))
+        : await db.select().from(leads).where(statusCondition);
 
     const leadsData =
       role === "employee"

@@ -1,6 +1,6 @@
 import { Logger } from "@/utils/logger";
 import { Request, Response } from "express";
-import { Employeedetails } from "../validators.employees";
+import { EmployeeEmail } from "../validators.employees";
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
@@ -8,13 +8,13 @@ import { eq } from "drizzle-orm";
 import { CSVLogger } from "@/utils/csv.logger";
 import { getRole } from "@/admin/utils/getRole";
 
-const handleUpdateEmployee = async (
-  req: Request<{}, {}, Employeedetails & TokenPayload>,
+const handleUpdateEmployeeEmail = async (
+  req: Request<{}, {}, EmployeeEmail & TokenPayload>,
   res: Response
 ) => {
   try {
     const { id } = req.body.token;
-    const { username, email } = req.body;
+    const { email } = req.body;
 
     const findEmployee = (
       await db.select().from(employee).where(eq(employee.id, id)).limit(1)
@@ -25,10 +25,7 @@ const handleUpdateEmployee = async (
         .send({ description: "Employee not found", type: "error" });
     }
 
-    await db
-      .update(employee)
-      .set({ username, email })
-      .where(eq(employee.id, id));
+    await db.update(employee).set({ email }).where(eq(employee.id, id));
 
     CSVLogger.succes(
       findEmployee.id,
@@ -37,7 +34,7 @@ const handleUpdateEmployee = async (
     );
     return res.status(200).send({
       title: "Success",
-      description: "Employee updated successfully",
+      description: "Employee email updated successfully",
       type: "success",
     });
   } catch (err) {
@@ -48,4 +45,4 @@ const handleUpdateEmployee = async (
   }
 };
 
-export default handleUpdateEmployee;
+export default handleUpdateEmployeeEmail;

@@ -8,31 +8,14 @@ import { CSVLogger } from "@/utils/csv.logger";
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { getRole } from "@/admin/utils/getRole";
 
-const handleUpdateLead = async (
+const handleUpdateLeadEmployee = async (
   req: Request<{ leadId: string }, {}, ReqUpdateLead & TokenPayload>,
   res: Response
 ) => {
   try {
     const { id, role } = req.body.token;
     const { leadId } = req.params;
-    const { name, email, assigned, last_contacted, source, status, tel } =
-      req.body;
-
-    let findEmployee: DbEmployee | undefined = undefined;
-    if (!!assigned) {
-      findEmployee = (
-        await db
-          .select()
-          .from(employee)
-          .where(eq(employee.id, assigned))
-          .limit(1)
-      )[0];
-      if (!findEmployee) {
-        return res
-          .status(404)
-          .send({ description: "employee not found", type: "error" });
-      }
-    }
+    const { name, email, last_contacted, source, status, tel } = req.body;
 
     const lead = (
       await db.select().from(leads).where(eq(leads.id, leadId)).limit(1)
@@ -43,20 +26,13 @@ const handleUpdateLead = async (
         .send({ description: "lead not found", type: "error" });
     }
 
-      CSVLogger.info(
-        id,
-        getRole(role),
-        req.body.assigned && findEmployee?.username
-          ? `Lead ${leadId} assigned to ${findEmployee.username} by ${id}`
-          : `Lead ${leadId} unassigned by ${id}`
-      );
+    CSVLogger.info(id, getRole(role), `employee updated lead ${lead.id}`);
 
     await db
       .update(leads)
       .set({
         name,
         email,
-        assigned,
         last_contacted: last_contacted ? new Date(last_contacted) : null,
         source,
         status,
@@ -77,4 +53,4 @@ const handleUpdateLead = async (
   }
 };
 
-export default handleUpdateLead;
+export default handleUpdateLeadEmployee;

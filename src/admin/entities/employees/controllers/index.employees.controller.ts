@@ -2,7 +2,8 @@ import handleCreateEmployee from "./create.employees.controller";
 import handleGetEmployees from "./get.employees..controller";
 import handleGetEmployeeDetails from "./get.details.employees.controller";
 import handleFetchEmployeeDetailsForAdmin from "./get.details.admin.employees.controller";
-import handleUpdateEmployee from "./update.employee.controller";
+import handleUpdateEmployeeEmail from "./update.email.employee.controller";
+import handleUpdateEmployeeUsername from "./update.username.employee.controller";
 import handleUpdateEmployeePassword from "./updatePassword.employee.controller";
 
 import handleGetAllEmployeeLogsList from "./get.logs.list.employees.controller";
@@ -18,7 +19,8 @@ export default {
   handleGetEmployees,
   handleGetEmployeeDetails,
   handleFetchEmployeeDetailsForAdmin,
-  handleUpdateEmployee,
+  handleUpdateEmployeeEmail,
+  handleUpdateEmployeeUsername,
   handleUpdateEmployeePassword,
 
   handleGetAllEmployeeLogsList,

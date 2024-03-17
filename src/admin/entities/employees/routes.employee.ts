@@ -4,9 +4,10 @@ import validateResources, {
   blankSchema,
 } from "@/admin/middlewares/validateResources";
 import {
+  employeeEmail,
   employeePassword,
   employeePrivilage,
-  employeedetails,
+  employeeUsername,
 } from "./validators.employees";
 
 const router = Router();
@@ -18,10 +19,15 @@ router.post(
   employeeControllers.handleGetPrivilages
 );
 
-router.put(
-  "/update",
-  validateResources(blankSchema, employeedetails, blankSchema),
-  employeeControllers.handleUpdateEmployee
+router.patch(
+  "/update/username",
+  validateResources(blankSchema, employeeUsername, blankSchema),
+  employeeControllers.handleUpdateEmployeeUsername
+);
+router.patch(
+  "/update/email",
+  validateResources(blankSchema, employeeEmail, blankSchema),
+  employeeControllers.handleUpdateEmployeeEmail
 );
 router.put(
   "/update/password",
