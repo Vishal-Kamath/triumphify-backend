@@ -50,6 +50,13 @@ const privilages: Privilage[] = [
       // Orders
       "/orders/details",
       "/orders/details/:id",
+
+      // Banners
+      "/banners/:type",
+      "/banners/:type/:id",
+      "/banners/:type/create",
+      "/banners/main",
+      "/banners/sub",
     ],
   },
   {
@@ -59,6 +66,7 @@ const privilages: Privilage[] = [
 
       "/employees/details",
       "/employees/leads",
+      "/employees/tickets",
 
       // Products
       "/products/create",
@@ -83,6 +91,13 @@ const privilages: Privilage[] = [
       // Orders
       "/orders/details",
       "/orders/details/:id",
+
+      // Banners
+      "/banners/:type",
+      "/banners/:type/:id",
+      "/banners/:type/create",
+      "/banners/main",
+      "/banners/sub",
     ],
   },
   {
@@ -96,6 +111,7 @@ const privilages: Privilage[] = [
       "/employees/logs/:name",
       "/employees/create",
       "/employees/leads",
+      "/employees/tickets",
 
       // Products
       "/products/create",
@@ -123,6 +139,13 @@ const privilages: Privilage[] = [
 
       "/orders/analytics",
       "/orders/analytics/:id",
+
+      // Banners
+      "/banners/:type",
+      "/banners/:type/:id",
+      "/banners/:type/create",
+      "/banners/main",
+      "/banners/sub",
     ],
   },
 ];
