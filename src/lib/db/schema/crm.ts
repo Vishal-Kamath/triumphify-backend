@@ -5,22 +5,7 @@ import {
   mysqlEnum,
   text,
 } from "drizzle-orm/mysql-core";
-
-// -------------------------------------------------
-// Task
-// -------------------------------------------------
-export const tasks = mysqlTable("tasks", {
-  id: varchar("id", { length: 36 }).notNull().primaryKey(),
-  assigned: varchar("assigned", { length: 36 }),
-  title: varchar("title", { length: 100 }).notNull(),
-  description: text("description").notNull(),
-  status: mysqlEnum("status", ["pending", "completed", "failed"]).notNull(),
-  type: mysqlEnum("type", ["order", "support", "request", "misc"]).notNull(),
-  link: varchar("link", { length: 36 }),
-
-  created_at: timestamp("created_at").notNull().defaultNow(),
-  updated_at: timestamp("updated_at").onUpdateNow(),
-});
+import { users } from "./users";
 
 // -------------------------------------------------
 // Leads
@@ -34,6 +19,27 @@ export const leads = mysqlTable("leads", {
   assigned: varchar("assigned", { length: 36 }),
   status: mysqlEnum("status", ["pending", "converted", "rejected"]).notNull(),
   last_contacted: timestamp("last_contacted"),
+
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").onUpdateNow(),
+});
+
+// -------------------------------------------------
+// Tickets
+// -------------------------------------------------
+export const tickets = mysqlTable("tickets", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+  assigned: varchar("assigned", { length: 36 }),
+  link: varchar("link", { length: 200 }),
+  user_id: varchar("user_id", { length: 36 })
+    .notNull()
+    .references(() => users.id),
+
+  title: varchar("title", { length: 100 }).notNull(),
+  description: varchar("description", { length: 750 }),
+  status: mysqlEnum("status", ["pending", "completed", "failed"]).notNull(),
+
+  type: mysqlEnum("type", ["order", "support", "request", "misc"]).notNull(),
 
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
