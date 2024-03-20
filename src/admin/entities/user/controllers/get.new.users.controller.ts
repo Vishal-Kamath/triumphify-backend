@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
+import { convertUTCDateToLocalDateString } from "@/utils/getUTCDate";
 import { Logger } from "@/utils/logger";
-import { and, count, eq, gte, lte } from "drizzle-orm";
+import { and, gte, lte } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleGetNewUsers = async (
@@ -14,6 +15,15 @@ const handleGetNewUsers = async (
 
     const start_date = new Date(year, month, 1);
     const end_date = new Date(year, Number(month) + 1, 1);
+
+    const dates = Array(Number(new Date(year, Number(month) + 1, 0).getDate()))
+      .fill(0)
+      .map((_, i) => ({
+        date: new Date(
+          convertUTCDateToLocalDateString(new Date(year, month, i + 1)) || ""
+        ),
+        count: 0,
+      }));
 
     const newUsers = (
       await db
@@ -29,9 +39,13 @@ const handleGetNewUsers = async (
         )
     ).reduce((acc: { date: Date; count: number }[], userSignIn) => {
       const signInDate = new Date(
-        userSignIn.date.getFullYear(),
-        userSignIn.date.getMonth(),
-        userSignIn.date.getDate()
+        convertUTCDateToLocalDateString(
+          new Date(
+            userSignIn.date.getFullYear(),
+            userSignIn.date.getMonth(),
+            userSignIn.date.getDate()
+          )
+        ) || ""
       );
 
       const existingSignInDate = acc.find(
@@ -46,8 +60,17 @@ const handleGetNewUsers = async (
       return acc;
     }, []);
 
+    newUsers.forEach((user) => {
+      const dateIndex = dates.findIndex(
+        (date) => date.date.getTime() === user.date.getTime()
+      );
+      if (dateIndex !== -1) {
+        dates[dateIndex].count = user.count;
+      }
+    });
+
     res.status(200).send({
-      data: newUsers,
+      data: dates,
       type: "success",
     });
   } catch (err) {
