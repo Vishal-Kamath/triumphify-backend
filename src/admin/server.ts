@@ -48,6 +48,7 @@ import productsRoutes from "@admin/entities/products/routes.products";
 import bannersRoutes from "@admin/entities/banners/routes.banners";
 import showcaseRoutes from "@admin/entities/showcase/routes.showcase";
 import ordersRoutes from "@admin/entities/orders/routes.orders";
+import ticketsRoutes from "@admin/entities/tickets/routes.tickets";
 
 app.use(validateEmployee);
 app.use("/api/employees", employeeRoutes);
@@ -59,6 +60,7 @@ app.use("/api/products", productsRoutes);
 app.use("/api/banners", bannersRoutes);
 app.use("/api/showcases", showcaseRoutes);
 app.use("/api/employee/orders", ordersRoutes);
+app.use("/api/tickets", ticketsRoutes);
 
 // -------------------------------------------------
 // Protected Routes (Admin)
