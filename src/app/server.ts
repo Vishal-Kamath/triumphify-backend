@@ -11,11 +11,11 @@ import bannerRoutes from "@app/entities/banners/routes.banner";
 import categoryRoutes from "@app/entities/categories/routes.categories";
 import productsRoutes from "@app/entities/products/routes.products";
 import productsProtectedRoutes from "@app/entities/products/routes.protected.products";
+import ticketsRoutes from "@app/entities/tickets/routes.tickets";
 import wishlistRoutes from "@app/entities/wishlist/routes.wishlist";
 import cartRoutes from "@app/entities/cart/routes.cart";
 import addressRoutes from "@app/entities/address/routes.address";
 import ordersRoutes from "@app/entities/orders/routes.orders";
-import userRoutes from "@app/entities/user/route.user";
 import userProtectedRoutes from "@app/entities/user/protected.routes.user";
 import validateUser from "@app/middlewares/validateUser";
 import initPassport from "@app/entities/auth/config/passport.config";
@@ -61,6 +61,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use("/api/products", productsProtectedRoutes);
+app.use("/api/tickets", ticketsRoutes);
 
 
 // 404
