@@ -36,7 +36,7 @@ export const tickets = mysqlTable("tickets", {
     .references(() => users.id),
 
   title: varchar("title", { length: 100 }).notNull(),
-  description: varchar("description", { length: 750 }),
+  description: varchar("description", { length: 750 }).notNull(),
   status: mysqlEnum("status", ["pending", "completed", "failed"]).notNull(),
 
   type: mysqlEnum("type", ["order", "support", "request", "misc"]).notNull(),
