@@ -11,6 +11,7 @@ import { signToken } from "@/app/utils/jwt.utils";
 import { CSVLogger } from "@/utils/csv.logger";
 import { getRole } from "@/admin/utils/getRole";
 import { env } from "@/config/env.config";
+import { resetPasswordEmail } from "@/utils/courier/reset-password";
 
 const handleSendResetPasswordLink = async (
   req: Request<{}, {}, EmployeeEmail>,
@@ -56,18 +57,18 @@ const handleSendResetPasswordLink = async (
       key: "RESET_TOKEN_PRIVATE",
       id: fetchEmployee.id,
     });
-    sendEmail({
+    resetPasswordEmail({
       email: fetchEmployee.email,
-      subject: "Reset Password",
-      message: resetPasswordFormat(
-        `${env.ADMIN_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`
-      ),
+      data: {
+        redirect: `${env.ADMIN_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`,
+        userName: fetchEmployee.username || "User",
+      },
     });
 
     CSVLogger.info(
       fetchEmployee.id,
       getRole(fetchEmployee.role),
-      "password reset request"
+      "password reset requested"
     );
     res.status(200).send({
       title: "Success!",
