@@ -26,6 +26,8 @@ const privilages: Privilage[] = [
     paths: [
       "/users/accounts",
       "/users/leads",
+      "/users/tickets",
+      "/users/tickets/:id",
 
       // Products
       "/products/create",
@@ -67,6 +69,7 @@ const privilages: Privilage[] = [
       "/employees/details",
       "/employees/leads",
       "/employees/tickets",
+      "/employees/tickets/:id",
 
       // Products
       "/products/create",
@@ -112,6 +115,7 @@ const privilages: Privilage[] = [
       "/employees/create",
       "/employees/leads",
       "/employees/tickets",
+      "/employees/tickets/:id",
 
       // Products
       "/products/create",
