@@ -4,11 +4,10 @@ import { db } from "@/lib/db";
 import { otpVerification, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { UserEmail } from "../validators.user";
-import sendEmail from "@/utils/mailer/mailer";
-import { resetPasswordFormat } from "@/utils/mailer/resetPassword";
 import { generateOTP } from "@/utils/otp.utils";
 import { signToken } from "@/app/utils/jwt.utils";
 import { env } from "@/config/env.config";
+import { resetPasswordEmail } from "@/utils/courier/reset-password";
 
 const handleSendResetPasswordLink = async (
   req: Request<{}, {}, UserEmail>,
@@ -51,12 +50,12 @@ const handleSendResetPasswordLink = async (
     }
 
     const token = signToken({ key: "RESET_TOKEN_PRIVATE", id: fetchUser.id });
-    sendEmail({
+    resetPasswordEmail({
       email: fetchUser.email,
-      subject: "Reset Password",
-      message: resetPasswordFormat(
-        `${env.APP_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`
-      ),
+      data: {
+        redirect: `${env.APP_WEBSITE}/auth/reset-password?token=${token}&otp=${otp}`,
+        userName: fetchUser.username || "User",
+      },
     });
 
     res.status(200).send({
