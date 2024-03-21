@@ -5,6 +5,7 @@ import handleChatWithClient from "./chat.tickets.controllers";
 import handleGetTicketChats from "./get.ticket.chats.controllers";
 import handleDeleteChatTickets from "./delete.chat.tickets.controllers";
 import handleUpdateChatTickets from "./update.chat.tickets.controllers";
+import handleUpdateTicketStatus from "./update.status.ticket.controller";
 
 export default {
   handleGetAllTickets,
@@ -14,4 +15,5 @@ export default {
   handleGetTicketChats,
   handleDeleteChatTickets,
   handleUpdateChatTickets,
+  handleUpdateTicketStatus,
 };

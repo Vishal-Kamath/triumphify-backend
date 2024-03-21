@@ -1,4 +1,4 @@
-import { zticketChat } from "./validators.tickets";
+import { zstatus, zticketChat } from "./validators.tickets";
 import validateResources, {
   blankSchema,
 } from "@/app/middlewares/validateResources";
@@ -8,7 +8,13 @@ import ticketControllers from "./controllers/index.tickets.controllers";
 const router = Router();
 
 router.route("/").get(ticketControllers.handleGetAllTickets);
-router.route("/:ticketId").get(ticketControllers.handleGetTicketById);
+router
+  .route("/:ticketId")
+  .put(
+    validateResources(blankSchema, zstatus, blankSchema),
+    ticketControllers.handleUpdateTicketStatus
+  )
+  .get(ticketControllers.handleGetTicketById);
 router
   .route("/:ticketId/chat")
   .get(ticketControllers.handleGetTicketChats)
