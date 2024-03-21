@@ -4,6 +4,7 @@ import {
   varchar,
   mysqlEnum,
   text,
+  boolean,
 } from "drizzle-orm/mysql-core";
 import { users } from "./users";
 
@@ -43,4 +44,19 @@ export const tickets = mysqlTable("tickets", {
 
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
+});
+
+// -------------------------------------------------
+// Ticket Chat
+// -------------------------------------------------
+export const ticket_chats = mysqlTable("ticket_chats", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+  user_or_employee_id: varchar("user_or_employee_id", { length: 36 }).notNull(),
+  ticket_id: varchar("ticket_id", { length: 36 })
+    .notNull()
+    .references(() => tickets.id),
+  type: mysqlEnum("type", ["user", "employee"]).notNull(),
+  content: text("content").notNull(),
+  seen: boolean("seen").default(false),
+  created_at: timestamp("created_at").notNull().defaultNow(),
 });
