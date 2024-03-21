@@ -143,28 +143,28 @@ export const orders = mysqlTable("orders", {
 });
 export type DbOrders = typeof orders.$inferSelect;
 
-// -------------------------------------------------
-// Order Request
-// -------------------------------------------------
-export const order_cancel_return_request = mysqlTable(
-  "order_cancel_return_request",
-  {
-    id: varchar("id", { length: 36 }).notNull().primaryKey(),
-    order_id: varchar("order_id", { length: 36 })
-      .notNull()
-      .references(() => orders.id),
+// // -------------------------------------------------
+// // Order Request
+// // -------------------------------------------------
+// export const order_cancel_return_request = mysqlTable(
+//   "order_cancel_return_request",
+//   {
+//     id: varchar("id", { length: 36 }).notNull().primaryKey(),
+//     order_id: varchar("order_id", { length: 36 })
+//       .notNull()
+//       .references(() => orders.id),
 
-    user_id: varchar("user_id", { length: 36 })
-      .notNull()
-      .references(() => users.id),
+//     user_id: varchar("user_id", { length: 36 })
+//       .notNull()
+//       .references(() => users.id),
 
-    type: mysqlEnum("type", ["cancel", "return"]).notNull(),
-    reason: varchar("reason", { length: 750 }).notNull(),
-    status: mysqlEnum("status", ["pending", "approved", "rejected"])
-      .notNull()
-      .default("pending"),
+//     type: mysqlEnum("type", ["cancel", "return"]).notNull(),
+//     reason: varchar("reason", { length: 750 }).notNull(),
+//     status: mysqlEnum("status", ["pending", "approved", "rejected"])
+//       .notNull()
+//       .default("pending"),
 
-    created_at: timestamp("created_at").notNull().defaultNow(),
-    update_at: timestamp("update_at").onUpdateNow(),
-  }
-);
+//     created_at: timestamp("created_at").notNull().defaultNow(),
+//     update_at: timestamp("update_at").onUpdateNow(),
+//   }
+// );

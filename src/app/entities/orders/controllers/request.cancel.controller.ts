@@ -1,6 +1,6 @@
 import { TokenPayload } from "@/app/utils/jwt.utils";
 import { db } from "@/lib/db";
-import { order_cancel_return_request, orders } from "@/lib/db/schema";
+import { orders, tickets } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
@@ -25,12 +25,13 @@ const handleCancelOrderRequest = async (
         .send({ description: "order not found", type: "error" });
     }
 
-    await db.insert(order_cancel_return_request).values({
+    await db.insert(tickets).values({
       id: uuid(),
-      order_id: orderId,
       user_id: id,
-      reason,
-      type: "cancel",
+      link: orderId,
+      title: "Cancel Order Request",
+      description: reason,
+      type: "order",
       status: "pending",
     });
 
