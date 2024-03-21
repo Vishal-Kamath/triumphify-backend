@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:app": "npm run build & npm run prod:app",
-    "start:admin": "npm run build & npm run prod:admin",
-    "start:cdn": "npm run build & npm run prod:cdn",
+    "start:app": "npm run prod:app",
+    "start:admin": "npm run prod:admin",
+    "start:cdn": "npm run prod:cdn",
     "build": "tsc",
     "watch": "tsc --watch",
     "prod:app": "cross-env NODE_ENV=production node ./dist/app/server.js",
