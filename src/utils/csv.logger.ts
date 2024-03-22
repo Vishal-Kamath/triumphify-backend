@@ -103,7 +103,7 @@ export class CSVLogger {
     const log = `${id}, ${employee_id}, ${employee_role}, ${msg
       .map((val) => String(val))
       .join(" ")
-      .replaceAll(",", "")}, success, ${created_at}\n`;
+      .replaceAll(",", "").replaceAll("\n", "\t")}, success, ${created_at}\n`;
 
     fs.appendFileSync(logpath, log, "utf-8");
   }
@@ -119,7 +119,7 @@ export class CSVLogger {
     const log = `${id}, ${employee_id}, ${employee_role}, ${msg
       .map((val) => String(val))
       .join(" ")
-      .replaceAll(",", "")}, warning, ${created_at}\n`;
+      .replaceAll(",", "").replaceAll("\n", "\t")}, warning, ${created_at}\n`;
 
     fs.appendFileSync(logpath, log, "utf-8");
   }
@@ -135,7 +135,7 @@ export class CSVLogger {
     const log = `${id}, ${employee_id}, ${employee_role}, ${msg
       .map((val) => String(val))
       .join(" ")
-      .replaceAll(",", "")}, error, ${created_at}\n`;
+      .replaceAll(",", "").replaceAll("\n", "\t")}, error, ${created_at}\n`;
 
     fs.appendFileSync(logpath, log, "utf-8");
   }
@@ -147,7 +147,7 @@ export class CSVLogger {
     const log = `${id}, ${employee_id}, ${employee_role}, ${msg
       .map((val) => String(val))
       .join(" ")
-      .replaceAll(",", "")}, info, ${created_at}\n`;
+      .replaceAll(",", "").replaceAll("\n", "\t")}, info, ${created_at}\n`;
 
     fs.appendFileSync(logpath, log, "utf-8");
   }
