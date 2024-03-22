@@ -150,6 +150,10 @@ const privilages: Privilage[] = [
       "/banners/:type/create",
       "/banners/main",
       "/banners/sub",
+
+      // config
+      "/config/gtm",
+      "/config/payment",
     ],
   },
 ];
