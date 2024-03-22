@@ -103,7 +103,7 @@ export class CSVLogger {
     const log = `${id}, ${employee_id}, ${employee_role}, ${msg
       .map((val) => String(val))
       .join(" ")
-      .replaceAll(",", "")}, succes, ${created_at}\n`;
+      .replaceAll(",", "")}, success, ${created_at}\n`;
 
     fs.appendFileSync(logpath, log, "utf-8");
   }
