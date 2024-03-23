@@ -27,7 +27,7 @@ const PORT = env.PORT || 4000;
 
 app.use(
   cors({
-    origin: [env.APP_WEBSITE],
+    origin: [env.APP_WEBSITE, env.WEBSITE],
     credentials: true,
   })
 );

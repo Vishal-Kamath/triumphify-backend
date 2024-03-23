@@ -28,6 +28,7 @@ export const env = envsafe({
   CDN_ENDPOINT: str(),
 
   // websites
+  WEBSITE: str(),
   APP_WEBSITE: str(),
   ADMIN_WEBSITE: str(),
 
