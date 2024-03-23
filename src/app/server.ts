@@ -7,6 +7,7 @@ import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
 
 import authRoutes from "@app/entities/auth/routes.auth";
+import contactRoutes from "@app/entities/contact/routes.contact";
 import bannerRoutes from "@app/entities/banners/routes.banner";
 import categoryRoutes from "@app/entities/categories/routes.categories";
 import productsRoutes from "@app/entities/products/routes.products";
@@ -45,6 +46,7 @@ app.get("/", healthCheck("hello from Triumphify server"));
 // -------------------------------------------------
 initPassport(app);
 app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes);
 // app.use(" ", userRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/categories", categoryRoutes);

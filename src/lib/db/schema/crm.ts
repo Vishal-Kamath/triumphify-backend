@@ -14,7 +14,7 @@ import { users } from "./users";
 export const leads = mysqlTable("leads", {
   id: varchar("id", { length: 36 }).notNull().primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
-  email: varchar("email", { length: 100 }).notNull().unique(),
+  email: varchar("email", { length: 100 }).notNull(),
   tel: varchar("tel", { length: 100 }).notNull(),
   source: varchar("source", { length: 100 }).notNull(),
   assigned: varchar("assigned", { length: 36 }),
