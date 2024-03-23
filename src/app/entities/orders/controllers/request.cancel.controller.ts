@@ -31,7 +31,7 @@ const handleCancelOrderRequest = async (
       link: orderId,
       title: "Cancel Order Request",
       description: reason,
-      type: "order",
+      type: "request",
       status: "pending",
     });
 
