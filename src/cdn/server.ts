@@ -14,7 +14,12 @@ const PORT = env.CDN_PORT || 5000;
 
 app.use(
   cors({
-    origin: [env.APP_WEBSITE, env.ADMIN_WEBSITE, env.ADMIN_ENDPOINT],
+    origin: [
+      env.WEBSITE,
+      env.APP_WEBSITE,
+      env.ADMIN_WEBSITE,
+      env.ADMIN_ENDPOINT,
+    ],
     credentials: true,
   })
 );
