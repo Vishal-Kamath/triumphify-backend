@@ -2,7 +2,7 @@ import { TokenPayload } from "@/app/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
-import { and, eq, or } from "drizzle-orm";
+import { and, desc, eq, or } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleGetAllOrders = async (
@@ -43,7 +43,11 @@ const handleGetAllOrders = async (
             eq(orders.returned, true)
           );
 
-    const ordersList = await db.select().from(orders).where(condition);
+    const ordersList = await db
+      .select()
+      .from(orders)
+      .where(condition)
+      .orderBy(desc(orders.created_at));
 
     res.status(200).send({ data: ordersList, type: "success" });
   } catch (err) {
