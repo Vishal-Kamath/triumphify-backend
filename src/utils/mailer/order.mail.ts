@@ -660,14 +660,7 @@ export function orderPlacedMailFormat({
                                                     color: #4c4c4c;
                                                   "
                                                 >
-                                                  We are reaching out to inform you
-                                                  about the cancellation of your
-                                                  recent order placed on Wed, 20th
-                                                  Mar 2024. We regret to inform you
-                                                  that due to unforeseen
-                                                  circumstances, we were unable to
-                                                  fulfill your order as initially
-                                                  anticipated.
+                                                Thank you for your recent purchase with Triumphify. We are excited to confirm that your order has been successfully received and is now being processed. Below are the details of your order:
                                                 </div>
                                               </td>
                                             </tr>
@@ -909,10 +902,113 @@ export function orderPlacedMailFormat({
                                                     color: #4c4c4c;
                                                   "
                                                 >
-                                                  If you have have any further
-                                                  queries please reach out to us at
-                                                  +1 123456789.
+                                                We will send you another email once your order has been shipped, along with tracking information so you can monitor the delivery status. Please note that the estimated delivery date is subject to change based on factors such as item availability and shipping carrier delays.
                                                 </div>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div
+                      style="
+                        background: #ffffff;
+                        background-color: #ffffff;
+                        margin: 0px auto;
+                        max-width: 582px;
+                      "
+                      class="c--block c--block-text"
+                    >
+                      <table
+                        style="
+                          background: #ffffff;
+                          background-color: #ffffff;
+                          width: 100%;
+                        "
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                        align="center"
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              style="
+                                border-left: 1px solid #f5f5f5;
+                                border-right: 1px solid #f5f5f5;
+                                direction: ltr;
+                                font-size: 0px;
+                                padding: 8px 30px;
+                                text-align: center;
+                              "
+                            >
+                              <div
+                                style="
+                                  font-size: 0px;
+                                  text-align: left;
+                                  direction: ltr;
+                                  display: inline-block;
+                                  vertical-align: top;
+                                  width: 100%;
+                                "
+                                class="mj-column-per-100 outlook-group-fix"
+                              >
+                                <table
+                                  width="100%"
+                                  role="presentation"
+                                  cellspacing="0"
+                                  cellpadding="0"
+                                  border="0"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        style="
+                                          background-color: transparent;
+                                          vertical-align: top;
+                                          padding: 4px 0px;
+                                        "
+                                      >
+                                        <table
+                                          width="100%"
+                                          style=""
+                                          role="presentation"
+                                          cellspacing="0"
+                                          cellpadding="0"
+                                          border="0"
+                                        >
+                                          <tbody>
+                                            <tr>
+                                              <td
+                                                style="
+                                                  font-size: 0px;
+                                                  padding: 0px;
+                                                  word-break: break-word;
+                                                "
+                                                class="c--text-text"
+                                                align="left"
+                                              >
+                                                <div
+                                                  style="
+                                                    font-family: Helvetica, Arial,
+                                                      sans-serif;
+                                                    font-size: 14px;
+                                                    line-height: 18px;
+                                                    text-align: left;
+                                                    color: #4c4c4c;
+                                                  "
+                                                >
+If you have any questions or concerns regarding your order, feel free to reach out to our customer support team at helpdesh@triumphify.com. We are here to assist you every step of the way.                                                </div>
                                               </td>
                                             </tr>
                                           </tbody>
