@@ -1,8 +1,8 @@
 import { TokenPayload } from "@/app/utils/jwt.utils";
 import { db } from "@/lib/db";
-import { order_details, orders } from "@/lib/db/schema";
+import { order_details, orders, tickets } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
-import { and, eq } from "drizzle-orm";
+import { and, eq, is } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleGetOrderById = async (
@@ -25,6 +25,23 @@ const handleGetOrderById = async (
         .status(404)
         .send({ description: "Order not found", type: "error" });
     }
+
+    const isCancelledRequested = (
+      await db
+        .select({
+          id: tickets.id,
+        })
+        .from(tickets)
+        .where(
+          and(
+            eq(tickets.user_id, id),
+            eq(tickets.link, order.id),
+            eq(tickets.type, "request"),
+            eq(tickets.title, "Cancel Order Request")
+          )
+        )
+        .limit(1)
+    )[0];
 
     const ordersDetails = (
       await db
@@ -54,6 +71,10 @@ const handleGetOrderById = async (
       order,
       order_details: ordersDetails,
       all_orders: allOrders,
+      isCancelledRequested:
+        isCancelledRequested && isCancelledRequested?.id
+          ? isCancelledRequested.id
+          : false,
     };
 
     res.status(200).send({
