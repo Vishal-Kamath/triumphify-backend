@@ -16,4 +16,6 @@ router
     orderControllers.handleUpdateOrderStatus
   );
 
+router.route("/:orderId/cancel").delete(orderControllers.handleCancelOrder);
+
 export default router;
