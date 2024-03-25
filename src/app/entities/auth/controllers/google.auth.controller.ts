@@ -14,11 +14,11 @@ export const passportConfig = {
 const handleGoogleAuth = async (req: Request, res: Response) => {
   try {
     const { id } = req.user as DbUser;
-    if (!id) return res.redirect(302, env.APP_WEBSITE);
+    if (!id) return res.redirect(302, env.WEBSITE);
 
     removeTokens(res);
     addTokens(res, id);
-    res.redirect(302, env.APP_WEBSITE);
+    res.redirect(302, env.WEBSITE);
   } catch (err) {
     Logger.error("handle google oauth error", err);
     res.status(500).json({ title: "Internal server error", type: "error" });
