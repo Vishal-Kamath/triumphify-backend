@@ -1008,7 +1008,7 @@ export function orderPlacedMailFormat({
                                                     color: #4c4c4c;
                                                   "
                                                 >
-If you have any questions or concerns regarding your order, feel free to reach out to our customer support team at helpdesh@triumphify.com. We are here to assist you every step of the way.                                                </div>
+If you have any questions or concerns regarding your order, feel free to reach out to our customer support team at helpdesk@triumphify.com. We are here to assist you every step of the way.                                                </div>
                                               </td>
                                             </tr>
                                           </tbody>
