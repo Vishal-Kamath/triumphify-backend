@@ -441,7 +441,7 @@ export function orderPlacedMailFormat({
                                                             width: 100%;
                                                             font-size: 13px;
                                                           "
-                                                          src="${env.WEBSITE}/logo.svg"
+                                                          src="https://triumphify.com/logo.svg"
                                                           height="auto"
                                                           alt=""
                                                         />
