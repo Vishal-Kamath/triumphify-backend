@@ -105,6 +105,9 @@ export const orders = mysqlTable("orders", {
   product_quantity: int("product_quantity").notNull(),
 
   // product variations
+  product_variation_key: varchar("product_variation_key", {
+    length: 100,
+  }).notNull(),
   product_variation_combinations: json(
     "product_variation_combinations"
   ).notNull(),

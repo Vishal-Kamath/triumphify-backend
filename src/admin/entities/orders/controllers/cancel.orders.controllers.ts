@@ -2,12 +2,12 @@ import { getRole } from "@/admin/utils/getRole";
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { env } from "@/config/env.config";
 import { db } from "@/lib/db";
-import { orders, users } from "@/lib/db/schema";
+import { orders, product_variations, users } from "@/lib/db/schema";
 import { cancelOrderEmail } from "@/utils/courier/cancel-order";
 import { CSVLogger } from "@/utils/csv.logger";
 import { dateFormater } from "@/utils/dateFormater";
 import { Logger } from "@/utils/logger";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { Request, Response } from "express";
 
 const handleCancelOrder = async (
@@ -28,6 +28,26 @@ const handleCancelOrder = async (
         .send({ description: "order not found", type: "error" });
     }
 
+    const findProductVariation = (
+      await db
+        .select()
+        .from(product_variations)
+        .where(
+          and(
+            eq(product_variations.key, findOrder.product_variation_key),
+            eq(product_variations.product_id, findOrder.product_id)
+          )
+        )
+        .limit(1)
+    )[0];
+
+    if (!findProductVariation) {
+      return res.status(404).send({
+        description: "product variation not found",
+        type: "error",
+      });
+    }
+
     const findUser = (
       await db
         .select()
@@ -36,10 +56,24 @@ const handleCancelOrder = async (
         .limit(1)
     )[0];
 
-    await db
-      .update(orders)
-      .set({ cancelled: true })
-      .where(eq(orders.id, orderId));
+    await db.transaction(async (trx) => {
+      await trx
+        .update(orders)
+        .set({ cancelled: true })
+        .where(eq(orders.id, orderId));
+
+      await trx
+        .update(product_variations)
+        .set({
+          quantity: findProductVariation.quantity + findOrder.product_quantity,
+        })
+        .where(
+          and(
+            eq(product_variations.key, findOrder.product_variation_key),
+            eq(product_variations.product_id, findOrder.product_id)
+          )
+        );
+    });
 
     CSVLogger.info(id, getRole(role), "cancelled order", orderId);
 

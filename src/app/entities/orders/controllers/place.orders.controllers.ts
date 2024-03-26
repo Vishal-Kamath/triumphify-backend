@@ -181,6 +181,7 @@ const handlePlaceOrders = async (
       product_image: cart.product.product_images[0],
       product_quantity: cart.quantity,
 
+      product_variation_key: cart.variation.key,
       product_variation_combinations: cart.variation.combinations,
       product_variation_price: cart.variation.price,
       product_variation_final_price:
@@ -197,7 +198,7 @@ const handlePlaceOrders = async (
       status: "pending",
       cancelled: false,
       returned: false,
-    })) as DbOrders[]
+    })) as DbOrders[];
 
     await db.transaction(async (trx) => {
       // create order details
