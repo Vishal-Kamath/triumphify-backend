@@ -19,6 +19,8 @@ import { Logger } from "@/utils/logger";
 import sendEmail from "@/utils/mailer/mailer";
 import { orderPlacedMailFormat } from "@/utils/mailer/order.mail";
 import { OrderDetails } from "@/lib/@types/orders";
+import { lowStockAlert } from "@/utils/courier/low-stock-alert";
+import { env } from "@/config/env.config";
 
 function getTotals(cart: Cart[]) {
   const subTotal = parseFloat(
@@ -166,7 +168,7 @@ const handlePlaceOrders = async (
       billing_address_zip: findBillingAddress.zip,
       billing_address_tel: findBillingAddress.tel,
       billing_address_email: findBillingAddress.email,
-    }
+    };
 
     const new_orders = newCarts.map((cart) => ({
       id: uuid(),
@@ -205,18 +207,39 @@ const handlePlaceOrders = async (
       await trx.insert(order_details).values(new_order_details);
 
       // create orders
-      await trx.insert(orders).values(
-        new_orders
-      );
+      await trx.insert(orders).values(new_orders);
 
       // update product variations
       for (const cart of newCarts) {
+        const newQuantity = cart.variation.quantity - cart.quantity;
         await trx
           .update(product_variations)
           .set({
-            quantity: cart.variation.quantity - cart.quantity,
+            quantity: newQuantity,
           })
           .where(eq(product_variations.id, cart.variation.id));
+
+        if (newQuantity < 30) {
+          lowStockAlert({
+            data: {
+              redirect: `${env.ADMIN_WEBSITE}/products/details/${cart.product.id}`,
+              productName: cart.product.name,
+              variation: Object.keys(
+                cart.variation.combinations as Record<string, string>
+              )
+                .map(
+                  (val) =>
+                    `${val}: ${
+                      (cart.variation.combinations as Record<string, string>)[
+                        val
+                      ]
+                    }`
+                )
+                .join(" | "),
+              quantity: newQuantity.toString(),
+            },
+          });
+        }
       }
     });
 
@@ -230,7 +253,7 @@ const handlePlaceOrders = async (
         order_details: new_order_details,
         userName: findUser.username || "Customer",
       }),
-      subject: "Order Placed Successfully"
+      subject: "Order Placed Successfully",
     });
 
     return res.status(200).send({
