@@ -9,18 +9,18 @@ export const SignupSchema = z.object({
     .max(100)
     // .refine((val) => val.toString().length > 9, "Incorrect phone number")
     .refine((val) => !Number.isNaN(Number(val)), "Invalid input"),
-  gender: z.enum(["Male", "Female", "Other"]),
-  dateOfBirth: z
-    .string()
-    .trim()
-    .min(1)
-    .max(100)
-    .refine((dob) => {
-      return new Date(dob).getTime() < Date.now();
-    })
-    .refine((dob) => {
-      return isUser18Plus(dob);
-    }, "You must be 18 years or older"),
+  // gender: z.enum(["Male", "Female", "Other"]).nullish(),
+  // dateOfBirth: z
+  //   .string()
+  //   .trim()
+  //   .min(1)
+  //   .max(100)
+  //   .refine((dob) => {
+  //     return new Date(dob).getTime() < Date.now();
+  //   })
+  //   .refine((dob) => {
+  //     return isUser18Plus(dob);
+  //   }, "You must be 18 years or older"),
   password: z.string().trim().min(3).max(50),
 });
 export type SignupType = z.infer<typeof SignupSchema>;

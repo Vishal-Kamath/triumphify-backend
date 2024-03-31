@@ -14,7 +14,7 @@ const handleSignUp = async (
   res: Response
 ) => {
   try {
-    const { username, email, dateOfBirth, tel, gender, password } = req.body;
+    const { username, email, tel, password } = req.body;
 
     // user email exists
     const userExists = (
@@ -35,8 +35,6 @@ const handleSignUp = async (
       email,
       tel,
       username,
-      dateOfBirth,
-      gender,
       password: hashedPassword,
     });
 
