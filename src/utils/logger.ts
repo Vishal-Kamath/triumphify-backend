@@ -60,6 +60,11 @@ export class Logger {
 
   // request log
   static requestLogger(req: any, res: any, next: any) {
+    // omit if privlages
+    if (req.originalUrl.includes("/api/employees/privilages")) {
+      next();
+      return;
+    }
     console.log(
       `[${chalk.gray.bold("REQ")}]:[${chalk.gray(dayjs().format())}]:${
         req.method
