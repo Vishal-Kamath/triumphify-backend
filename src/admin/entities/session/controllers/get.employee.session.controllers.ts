@@ -6,13 +6,14 @@ import { Logger } from "@/utils/logger";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Request, Response } from "express";
 
-const handleGetSession = async (
-  req: Request<{}, {}, TokenPayload>,
+const handleGetEmployeeSession = async (
+  req: Request<{ employeeId: string }, {}, TokenPayload>,
   res: Response
 ) => {
   try {
-    const { id } = req.body.token;
+    const { employeeId } = req.params;
 
+    // get employee session
     const sessions = (
       await db
         .select({
@@ -22,7 +23,7 @@ const handleGetSession = async (
         .from(employee_time_session)
         .where(
           and(
-            eq(employee_time_session.employee_id, id),
+            eq(employee_time_session.employee_id, employeeId),
             eq(employee_time_session.status, "terminated")
           )
         )
@@ -69,11 +70,11 @@ const handleGetSession = async (
 
     res.status(200).send({ data: sessions, type: "success" });
   } catch (err) {
-    Logger.error("handle get session", err);
+    Logger.error("handle get employee session", err);
     res
       .status(500)
       .send({ description: "something went wrong", type: "error" });
   }
 };
 
-export default handleGetSession;
+export default handleGetEmployeeSession;

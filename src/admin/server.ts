@@ -75,11 +75,13 @@ app.use("/api/session", sessionRouter);
 import adminEmployeeRoutes from "@admin/entities/employees/routes.admin.employees";
 import adminLeadsRouter from "@admin/entities/leads/routes.admin.leads";
 import adminTicketsRouter from "@admin/entities/tickets/routes.admin.tickets";
+import adminSessionRouter from "@admin/entities/session/session.admin.routes";
 
 app.use(validateAdmin);
 app.use("/api/employees", adminEmployeeRoutes);
 app.use("/api/leads", adminLeadsRouter);
 app.use("/api/tickets", adminTicketsRouter);
+app.use("/api/session", adminSessionRouter);
 
 // -------------------------------------------------
 // Protected Routes (Superdmin)
