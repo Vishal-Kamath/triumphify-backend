@@ -82,7 +82,8 @@ class EmployeeSessionManager {
 
     service.time += 1;
     const nextDay =
-      convertUTCDateToLocalDate(new Date()) !== service.service.getDate();
+      convertUTCDateToLocalDate(new Date()).toDateString() !==
+      service.service.getDate().toDateString();
 
     // if next day
     if (nextDay) {

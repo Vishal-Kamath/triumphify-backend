@@ -23,7 +23,7 @@ export class EmployeeSessionService {
   }
 
   async startSession() {
-    await db.insert(employee_time_session).values({
+    return await db.insert(employee_time_session).values({
       service_id: this.service_id,
       employee_id: this.employee_id,
       status: "ongoing",
@@ -32,7 +32,7 @@ export class EmployeeSessionService {
   }
 
   async endSession() {
-    await db
+    return await db
       .update(employee_time_session)
       .set({
         status: "terminated",
@@ -46,7 +46,7 @@ export class EmployeeSessionService {
   }
 
   async updateTime(time: number) {
-    await db
+    return await db
       .update(employee_time_session)
       .set({ time })
       .where(
