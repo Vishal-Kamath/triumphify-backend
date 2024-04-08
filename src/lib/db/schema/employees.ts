@@ -3,6 +3,8 @@ import {
   timestamp,
   varchar,
   mysqlEnum,
+  date,
+  int,
 } from "drizzle-orm/mysql-core";
 
 // -------------------------------------------------
@@ -29,4 +31,19 @@ export const employee_privilages = mysqlTable("employee_privilages", {
   path: varchar("path", { length: 100 }).notNull(),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
+});
+
+// -------------------------------------------------
+// Employee Time Session
+// -------------------------------------------------
+export const employee_time_session = mysqlTable("employee_time_session", {
+  service_id: varchar("service_id", { length: 36 }).notNull().primaryKey(),
+  employee_id: varchar("id", { length: 36 })
+    .notNull()
+    .references(() => employee.id),
+  status: mysqlEnum("status", ["ongoing", "terminated"]).notNull(),
+  time: int("time").notNull().default(0),
+  date: date("date").notNull(),
+  started_at: timestamp("started_at").notNull().defaultNow(),
+  ended_at: timestamp("ended_at").onUpdateNow(),
 });

@@ -1,6 +1,7 @@
 import "module-alias/register";
 
 import express, { Request, Response } from "express";
+import http from "http";
 import cookieParser from "cookie-parser";
 import { Logger } from "@/utils/logger";
 import { env } from "@/config/env.config";
@@ -11,6 +12,7 @@ import validateAdmin from "@admin/middlewares/validateAdmin";
 import validateSuperAdmin from "@admin/middlewares/validateSuperAdmin";
 
 const app = express();
+const server = http.createServer(app);
 const PORT = env.ADMIN_PORT || 4500;
 
 app.use(
@@ -36,6 +38,7 @@ app.get("/", healthCheck("hello from Triumphify admin server"));
 import authRouter from "@admin/entities/auth/routes.auth";
 
 app.use("/api/auth", authRouter);
+
 // -------------------------------------------------
 // Protected Routes (Employee)
 // -------------------------------------------------
@@ -49,8 +52,11 @@ import bannersRoutes from "@admin/entities/banners/routes.banners";
 import showcaseRoutes from "@admin/entities/showcase/routes.showcase";
 import ordersRoutes from "@admin/entities/orders/routes.orders";
 import ticketsRoutes from "@admin/entities/tickets/routes.tickets";
+import sessionRouter from "@admin/entities/session/session.routes";
+import employeeSessionSocket from "./entities/session/session.socket";
 
 app.use(validateEmployee);
+employeeSessionSocket(server);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/user", userRouter);
 app.use("/api/leads", leadsRouter);
@@ -61,6 +67,7 @@ app.use("/api/banners", bannersRoutes);
 app.use("/api/showcases", showcaseRoutes);
 app.use("/api/employee/orders", ordersRoutes);
 app.use("/api/tickets", ticketsRoutes);
+app.use("/api/session", sessionRouter);
 
 // -------------------------------------------------
 // Protected Routes (Admin)
@@ -80,6 +87,7 @@ app.use("/api/tickets", adminTicketsRouter);
 import superadminEmployeeRoutes from "@admin/entities/employees/routes.superadmin.employee";
 import ordersProtectedRoutes from "@admin/entities/orders/routes.protected.orders";
 import salesRoutes from "@admin/entities/sales/routes.sales";
+import { cleanup } from "./utils/cleanup";
 
 app.use(validateSuperAdmin);
 app.use("/api/employees", superadminEmployeeRoutes);
@@ -96,6 +104,8 @@ app.all("*", (req: Request, res: Response) => {
   }
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   Logger.info(`Server listening on port ${PORT}`);
 });
+
+cleanup();
