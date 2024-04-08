@@ -74,16 +74,17 @@ app.use("/api/employees", adminEmployeeRoutes);
 app.use("/api/leads", adminLeadsRouter);
 app.use("/api/tickets", adminTicketsRouter);
 
-
 // -------------------------------------------------
 // Protected Routes (Superdmin)
 // -------------------------------------------------
 import superadminEmployeeRoutes from "@admin/entities/employees/routes.superadmin.employee";
 import ordersProtectedRoutes from "@admin/entities/orders/routes.protected.orders";
+import salesRoutes from "@admin/entities/sales/routes.sales";
 
 app.use(validateSuperAdmin);
 app.use("/api/employees", superadminEmployeeRoutes);
 app.use("/api/orders", ordersProtectedRoutes);
+app.use("/api/sales", salesRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {
