@@ -1,6 +1,7 @@
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { db } from "@/lib/db";
 import { employee_time_session } from "@/lib/db/schema";
+import { convertUTCDateToLocalDate } from "@/utils/getUTCDate";
 import { Logger } from "@/utils/logger";
 import { and, asc, eq, sum } from "drizzle-orm";
 import { Request, Response } from "express";
@@ -34,13 +35,15 @@ const handleGetSession = async (
     // no session
     if (sessions.length === 0) {
       const todayDate = new Date();
-      const today = new Date(
-        todayDate.getFullYear(),
-        todayDate.getMonth(),
-        todayDate.getDate(),
-        0,
-        0,
-        0
+      const today = convertUTCDateToLocalDate(
+        new Date(
+          todayDate.getFullYear(),
+          todayDate.getMonth(),
+          todayDate.getDate(),
+          0,
+          0,
+          0
+        )
       );
 
       for (let i = 0; i < 7; i++) {
