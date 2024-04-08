@@ -1,20 +1,25 @@
 import { db } from "@/lib/db";
 import { employee_time_session } from "@/lib/db/schema";
+import { convertUTCDateToLocalDate } from "@/utils/getUTCDate";
 import { and, eq, sql } from "drizzle-orm";
 
 export class EmployeeSessionService {
   private service_id: string;
   private employee_id: string;
+  private date: Date;
 
   constructor(service_id: string, employee_id: string) {
     this.service_id = service_id;
     this.employee_id = employee_id;
-
+    this.date = convertUTCDateToLocalDate(new Date());
     this.startSession();
   }
 
   getEmployeeId() {
     return this.employee_id;
+  }
+  getDate() {
+    return this.date;
   }
 
   async startSession() {
@@ -22,7 +27,7 @@ export class EmployeeSessionService {
       service_id: this.service_id,
       employee_id: this.employee_id,
       status: "ongoing",
-      date: new Date(),
+      date: this.date,
     });
   }
 

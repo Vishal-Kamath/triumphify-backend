@@ -3,6 +3,7 @@ import { EmployeeSessionService } from "./session.service";
 import { v4 as uuid } from "uuid";
 import { Socket } from "socket.io";
 import { forEach } from "lodash";
+import { convertUTCDateToLocalDate } from "@/utils/getUTCDate";
 
 interface Service {
   service_id: string;
@@ -75,11 +76,26 @@ class EmployeeSessionManager {
     }
   }
 
-  static timeEventEmitter(employee_id: string) {
+  static async timeEventEmitter(employee_id: string) {
     const service = this.services[employee_id];
     if (!service) return;
 
     service.time += 1;
+    const nextDay =
+      convertUTCDateToLocalDate(new Date()) !== service.service.getDate();
+
+    // if next day
+    if (nextDay) {
+      await service.service.updateTime(service.time);
+      service.time = 0;
+      await service.service.endSession();
+
+      // create new service
+      const service_id = uuid();
+      service.service = new EmployeeSessionService(service_id, employee_id);
+      service.service_id = service_id;
+    }
+
     Object.values(service.concurent).map((socket) => {
       socket.emit("time", service.time);
     });
