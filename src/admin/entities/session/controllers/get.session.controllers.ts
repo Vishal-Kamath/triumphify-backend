@@ -31,10 +31,28 @@ const handleGetSession = async (
         .limit(7)
     ).map((data) => ({ date: data.date, time: Number(data.time) }));
 
+    // no session
+    if (sessions.length === 0) {
+      const todayDate = new Date();
+      const today = new Date(
+        todayDate.getFullYear(),
+        todayDate.getMonth(),
+        todayDate.getDate(),
+        0,
+        0,
+        0
+      );
+
+      for (let i = 0; i < 7; i++) {
+        const newDate = new Date(today);
+        newDate.setDate(newDate.getDate() + i);
+        sessions.push({ date: newDate, time: 0 });
+      }
+    }
     // padding sessions if needed
-    if (sessions.length !== 7) {
+    if (sessions.length !== 7 && sessions.length !== 0) {
       const remainig = 7 - sessions.length;
-      const lastDate = sessions[sessions.length - 1].date;
+      const lastDate = sessions[sessions.length - 1]?.date;
 
       for (let i = 1; i <= remainig; i++) {
         const newDate = new Date(lastDate);
