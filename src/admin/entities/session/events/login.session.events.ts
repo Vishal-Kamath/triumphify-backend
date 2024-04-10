@@ -19,8 +19,6 @@ export const loginEvent = (socket: Socket) => {
       } else {
         socket.emit("unauthorized");
       }
-    } else {
-      socket.emit("unauthorized");
     }
   });
 };
