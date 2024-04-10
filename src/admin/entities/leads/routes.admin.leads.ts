@@ -7,10 +7,12 @@ import { updateLead } from "./validators.leads";
 
 const router = Router();
 
-router.post(
-  "/:leadId",
-  validateResources(blankSchema, updateLead, blankSchema),
-  leadsController.handleUpdateLead
-);
+router
+  .route("/:leadId")
+  .post(
+    validateResources(blankSchema, updateLead, blankSchema),
+    leadsController.handleUpdateLead
+  )
+  .delete(leadsController.handleDeleteLeads);
 
 export default router;
