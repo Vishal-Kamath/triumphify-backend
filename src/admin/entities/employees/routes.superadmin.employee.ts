@@ -2,14 +2,18 @@ import { Router } from "express";
 import validateResources, {
   blankSchema,
 } from "../../middlewares/validateResources";
-import { employee, employeeId } from "./validators.employees";
+import {
+  employee,
+  employeeId,
+  employeeWithPassword,
+} from "./validators.employees";
 import employeeControllers from "./controllers/index.employees.controller";
 
 const router = Router();
 
 router.post(
   "/create",
-  validateResources(blankSchema, employee, blankSchema),
+  validateResources(blankSchema, employeeWithPassword, blankSchema),
   employeeControllers.handleCreateEmployee
 );
 

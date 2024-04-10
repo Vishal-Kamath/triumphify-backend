@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Logger } from "@/utils/logger";
-import { ReqEmployee } from "../validators.employees";
+import { ReqEmployeeWithPassword } from "../validators.employees";
 import { db } from "@/lib/db";
 import { employee } from "@/lib/db/schema";
 import { v4 as uuid } from "uuid";
@@ -12,11 +12,11 @@ import { CSVLogger } from "@/utils/csv.logger";
 import { getRole } from "@/admin/utils/getRole";
 
 const handleCreateEmployee = async (
-  req: Request<{}, {}, ReqEmployee & TokenPayload>,
+  req: Request<{}, {}, ReqEmployeeWithPassword & TokenPayload>,
   res: Response
 ) => {
   try {
-    const { email, username, role, token } = req.body;
+    const { email, username, password, role, token } = req.body;
 
     const employeeExists = (
       await db.select().from(employee).where(eq(employee.email, email))
@@ -28,11 +28,12 @@ const handleCreateEmployee = async (
       });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     await db.insert(employee).values({
       id: uuid(),
       email,
       username,
-      password: "Needs to be set by the employee",
+      password: hashedPassword,
       role: role === "admin" ? env.ADMIN : env.EMPLOYEE,
       status: "active",
     });

@@ -15,6 +15,13 @@ export const employee = z.object({
 });
 export type ReqEmployee = z.infer<typeof employee>;
 
+export const employeeWithPassword = employee.merge(
+  z.object({
+    password: z.string().trim().min(3).max(50),
+  })
+);
+export type ReqEmployeeWithPassword = z.infer<typeof employeeWithPassword>;
+
 export const employeeUsername = z.object({
   username: z.string().max(50).min(3),
 });
