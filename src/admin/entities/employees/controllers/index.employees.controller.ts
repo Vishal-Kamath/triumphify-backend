@@ -14,6 +14,8 @@ import handleActivateDeactivateEmployee from "./activate.deactivate.superadmin.e
 import handleGetPrivilages from "./get.privilages.controller";
 import handleUpdateSuperadmin from "./update.superadmin.employees.controller";
 
+import handleGetAllSuperadminDetails from "./getall.superadmin.details.employee.controller";
+
 export default {
   handleCreateEmployee,
   handleGetEmployees,
@@ -31,4 +33,6 @@ export default {
 
   handleGetPrivilages,
   handleUpdateSuperadmin,
+
+  handleGetAllSuperadminDetails,
 };

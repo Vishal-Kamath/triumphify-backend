@@ -17,6 +17,8 @@ router.post(
   employeeControllers.handleCreateEmployee
 );
 
+router.get("/superadmins", employeeControllers.handleGetAllSuperadminDetails);
+
 router
   .route("/details/:id")
   .get(
