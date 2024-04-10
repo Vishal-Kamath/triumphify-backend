@@ -4,33 +4,33 @@ import { employee } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
-import { EmployeeRole } from "../validators.employees";
+import { ReqEmployee } from "../validators.employees";
 import { getRoleEnv } from "@/admin/utils/getRole";
 
-const handleUpdateRole = async (
-  req: Request<{ id: string }, {}, EmployeeRole & TokenPayload>,
+const handleUpdateSuperadmin = async (
+  req: Request<{ id: string }, {}, ReqEmployee & TokenPayload>,
   res: Response
 ) => {
   try {
     const { id } = req.params;
-    const { role } = req.body;
+    const { email, username, role } = req.body;
 
     await db
       .update(employee)
-      .set({ role: getRoleEnv(role) })
+      .set({ role: getRoleEnv(role), email, username })
       .where(eq(employee.id, id));
 
     return res.status(200).send({
       title: "Success",
-      description: "Role updated successfully",
+      description: "Employee updated successfully",
       type: "success",
     });
   } catch (err) {
-    Logger.error("handle update role error", err);
+    Logger.error("handle update employee superadmin error", err);
     res
       .status(500)
       .json({ description: "something went wrong", type: "error" });
   }
 };
 
-export default handleUpdateRole;
+export default handleUpdateSuperadmin;

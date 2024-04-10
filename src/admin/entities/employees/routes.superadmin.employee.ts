@@ -2,7 +2,7 @@ import { Router } from "express";
 import validateResources, {
   blankSchema,
 } from "../../middlewares/validateResources";
-import { employee, employeeId, employeeRole } from "./validators.employees";
+import { employee, employeeId } from "./validators.employees";
 import employeeControllers from "./controllers/index.employees.controller";
 
 const router = Router();
@@ -20,8 +20,8 @@ router
     employeeControllers.handleFetchEmployeeDetailsForAdmin
   )
   .post(
-    validateResources(employeeId, employeeRole, blankSchema),
-    employeeControllers.handleUpdateRole
+    validateResources(employeeId, employee, blankSchema),
+    employeeControllers.handleUpdateSuperadmin
   );
 
 router.get(

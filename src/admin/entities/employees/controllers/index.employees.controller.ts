@@ -12,7 +12,7 @@ import handleDeleteEmployeeLogs from "./delete.logs.employees";
 
 import handleActivateDeactivateEmployee from "./activate.deactivate.superadmin.employees.controller";
 import handleGetPrivilages from "./get.privilages.controller";
-import handleUpdateRole from "./update.superadmin.employees.controller";
+import handleUpdateSuperadmin from "./update.superadmin.employees.controller";
 
 export default {
   handleCreateEmployee,
@@ -30,5 +30,5 @@ export default {
   handleActivateDeactivateEmployee,
 
   handleGetPrivilages,
-  handleUpdateRole,
+  handleUpdateSuperadmin,
 };

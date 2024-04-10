@@ -16,7 +16,7 @@ const handleCreateEmployee = async (
   res: Response
 ) => {
   try {
-    const { email, username, password, role, token } = req.body;
+    const { email, username, role, token } = req.body;
 
     const employeeExists = (
       await db.select().from(employee).where(eq(employee.email, email))
@@ -28,12 +28,11 @@ const handleCreateEmployee = async (
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
     await db.insert(employee).values({
       id: uuid(),
       email,
       username,
-      password: hashedPassword,
+      password: "Needs to be set by the employee",
       role: role === "admin" ? env.ADMIN : env.EMPLOYEE,
       status: "active",
     });

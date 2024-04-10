@@ -11,7 +11,6 @@ export const employeeId = z.object({
 export const employee = z.object({
   email: z.string().email().trim().min(1).max(100),
   username: z.string().max(50).min(3),
-  password: z.string().max(50).min(3),
   role: z.enum(["admin", "employee"]),
 });
 export type ReqEmployee = z.infer<typeof employee>;
@@ -25,10 +24,6 @@ export const employeeEmail = z.object({
 });
 export type EmployeeEmail = z.infer<typeof employeeEmail>;
 
-export const employeeRole = z.object({
-  role: z.enum(["admin", "employee"]),
-});
-export type EmployeeRole = z.infer<typeof employeeRole>;
 
 export const employeePassword = z.object({
   currentPassword: z.string().trim().min(3).max(50),

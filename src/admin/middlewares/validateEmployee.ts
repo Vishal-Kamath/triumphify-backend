@@ -2,6 +2,9 @@ import { TokenPayload, verifyJwt } from "@admin/utils/jwt.utils";
 import { Logger } from "@/utils/logger";
 import { NextFunction, Request, Response } from "express";
 import { addTokens, removeTokens } from "@admin/entities/auth/utils/auth";
+import { db } from "@/lib/db";
+import { employee } from "@/lib/db/schema";
+import { and, eq } from "drizzle-orm";
 
 const validateEmployee = async (
   req: Request<{}, {}, TokenPayload>,
@@ -21,6 +24,15 @@ const validateEmployee = async (
       // Case 1: valid accessToken
       if (valid && !expired && decoded) {
         req.body.token = decoded.token;
+
+        // get is deactivated
+        // if (await getIsDeactive(decoded.token.id))
+        //   return res.status(401).send({
+        //     title: "Unauthorized",
+        //     description:
+        //       "You are not authorized to access this resource. Please login",
+        //     type: "error",
+        //   });
         return next();
       }
     }
@@ -37,6 +49,16 @@ const validateEmployee = async (
         removeTokens(res);
         addTokens(res, decoded.token.id, decoded.token.role);
         req.body.token = decoded.token;
+
+        // get is deactivated
+        // if (await getIsDeactive(decoded.token.id))
+        //   return res.status(401).send({
+        //     title: "Unauthorized",
+        //     description:
+        //       "You are not authorized to access this resource. Please login",
+        //     type: "error",
+        //   });
+
         return next();
       }
     }
@@ -56,3 +78,14 @@ const validateEmployee = async (
 };
 
 export default validateEmployee;
+
+async function getIsDeactive(employeeId: string) {
+  const user = (
+    await db
+      .select()
+      .from(employee)
+      .where(and(eq(employee.id, employeeId), eq(employee.status, "active")))
+      .limit(1)
+  )[0];
+  return !!user;
+}
