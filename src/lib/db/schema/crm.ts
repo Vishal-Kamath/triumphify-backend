@@ -18,7 +18,9 @@ export const leads = mysqlTable("leads", {
   tel: varchar("tel", { length: 100 }).notNull(),
   source: varchar("source", { length: 100 }).notNull(),
   assigned: varchar("assigned", { length: 36 }),
-  status: mysqlEnum("status", ["pending", "converted", "rejected"]).notNull(),
+  status: mysqlEnum("status", ["new", "pending", "converted", "rejected"])
+    .notNull()
+    .default("new"),
   last_contacted: timestamp("last_contacted"),
 
   created_at: timestamp("created_at").notNull().defaultNow(),

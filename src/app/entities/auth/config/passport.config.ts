@@ -86,7 +86,6 @@ function initGoogle() {
           name: newUser.username,
           email: newUser.email,
           source: "google-auth",
-          status: "pending",
           tel: "",
         });
         await welcomeToTriumphifyCourier({

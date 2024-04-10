@@ -19,7 +19,6 @@ const handleCreateContact = async (
       email,
       source,
       tel,
-      status: "pending",
     });
 
     res.status(201).send({

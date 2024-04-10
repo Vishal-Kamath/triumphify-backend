@@ -13,7 +13,7 @@ interface GetLeadsType {
   tel: string;
   source: string;
   assigned?: string | null;
-  status: "pending" | "converted" | "rejected";
+  status: "new" | "pending" | "converted" | "rejected";
   last_contacted: Date | null;
   created_at: Date;
   updated_at: Date | null;
@@ -24,7 +24,7 @@ const handleGetAllLeads = async (
     {},
     {},
     TokenPayload,
-    { status?: "pending" | "converted" | "rejected" }
+    { status?: "new" | "pending" | "converted" | "rejected" }
   >,
   res: Response
 ) => {

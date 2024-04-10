@@ -6,7 +6,7 @@ export const updateLead = z.object({
   tel: z.string(),
   assigned: z.string().nullish(),
   source: z.string(),
-  status: z.enum(["pending", "converted", "rejected"]),
+  status: z.enum(["new", "pending", "converted", "rejected"]),
   last_contacted: z
     .string()
     .refine((val) => !!val && !isNaN(new Date(val).getTime()))

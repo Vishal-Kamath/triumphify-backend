@@ -43,7 +43,6 @@ const handleSignUp = async (
       name: username,
       email: email,
       source: "website",
-      status: "pending",
       tel,
     });
 
