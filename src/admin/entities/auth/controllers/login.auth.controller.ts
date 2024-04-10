@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import { addTokens } from "../utils/auth";
 import { CSVLogger } from "@/utils/csv.logger";
 import { getRole } from "@/admin/utils/getRole";
+import { env } from "@/config/env.config";
 
 const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
   try {
@@ -39,9 +40,11 @@ const handleLogin = async (req: Request<{}, {}, ReqLogin>, res: Response) => {
       getRole(user.role),
       `User ${user.username} logged in`
     );
+
     return res.status(200).send({
       title: "Logged In!!",
       description: `successfully logged in as ${user.username}`,
+      redirect: getRole(user.role) === "superadmin" ? "/analytics" : "/",
       type: "success",
     });
   } catch (err) {
