@@ -53,7 +53,8 @@ import showcaseRoutes from "@admin/entities/showcase/routes.showcase";
 import ordersRoutes from "@admin/entities/orders/routes.orders";
 import ticketsRoutes from "@admin/entities/tickets/routes.tickets";
 import sessionRouter from "@admin/entities/session/session.routes";
-import employeeSessionSocket from "./entities/session/session.socket";
+import employeeSessionSocket from "@admin/entities/session/session.socket";
+import navRouter from "@admin/entities/nav/routes.nav";
 
 app.use(validateEmployee);
 employeeSessionSocket(server);
@@ -68,6 +69,7 @@ app.use("/api/showcases", showcaseRoutes);
 app.use("/api/employee/orders", ordersRoutes);
 app.use("/api/tickets", ticketsRoutes);
 app.use("/api/session", sessionRouter);
+app.use("/api/nav", navRouter);
 
 // -------------------------------------------------
 // Protected Routes (Admin)
