@@ -1,6 +1,6 @@
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { db } from "@/lib/db";
-import { leads, orders } from "@/lib/db/schema";
+import { leads, orders, tickets } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
 import { and, eq, sum } from "drizzle-orm";
 import { Request, Response } from "express";
@@ -25,7 +25,18 @@ const handleNavEmployee = async (
         .where(eq(orders.status, "pending"))
     )[0];
 
-    const data = { leads: leadsCount, orders: ordersCount };
+    const { ticketsCount } = (
+      await db
+        .select({ ticketsCount: sum(tickets.status) })
+        .from(tickets)
+        .where(and(eq(tickets.assigned, id), eq(tickets.status, "pending")))
+    )[0];
+
+    const data = {
+      leads: leadsCount,
+      orders: ordersCount,
+      tickets: ticketsCount,
+    };
     res.status(200).send({ data, type: "success" });
   } catch (err) {
     Logger.error(err);
