@@ -61,7 +61,10 @@ export class Logger {
   // request log
   static requestLogger(req: any, res: any, next: any) {
     // omit if privlages
-    if (req.originalUrl.includes("/api/employees/privilages")) {
+    if (
+      req.originalUrl.includes("/api/employees/privilages") ||
+      req.originalUrl.includes("/api/nav")
+    ) {
       next();
       return;
     }
