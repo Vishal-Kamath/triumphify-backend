@@ -69,6 +69,7 @@ export interface OrderDetails {
   billing_address_tel: string;
   billing_address_email: string;
 
+  created_date: Date;
   created_at?: Date;
   updated_at?: Date | null;
 }

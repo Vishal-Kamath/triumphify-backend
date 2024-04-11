@@ -141,6 +141,8 @@ const handlePlaceOrders = async (
     const { subTotal, discount, total } = getTotals(newCarts);
 
     const order_group_id = uuid();
+    const date = new Date();
+
     const new_order_details: OrderDetails = {
       id: order_group_id,
       user_id: id,
@@ -168,6 +170,8 @@ const handlePlaceOrders = async (
       billing_address_zip: findBillingAddress.zip,
       billing_address_tel: findBillingAddress.tel,
       billing_address_email: findBillingAddress.email,
+
+      created_date: date,
     };
 
     const new_orders = newCarts.map((cart) => ({
@@ -200,6 +204,8 @@ const handlePlaceOrders = async (
       status: "pending",
       cancelled: false,
       returned: false,
+
+      created_date: date,
     })) as DbOrders[];
 
     await db.transaction(async (trx) => {

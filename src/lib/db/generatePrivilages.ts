@@ -106,6 +106,7 @@ const privilages: Privilage[] = [
   {
     role: "superadmin",
     paths: [
+      "/analytics",
       "/users/stats",
 
       "/employees/details",

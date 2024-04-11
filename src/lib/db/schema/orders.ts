@@ -10,6 +10,7 @@ import {
   unique,
   primaryKey,
   float,
+  date,
 } from "drizzle-orm/mysql-core";
 import { users } from "./users";
 
@@ -79,6 +80,7 @@ export const order_details = mysqlTable("order_details", {
     length: 100,
   }).notNull(),
 
+  created_date: date("created_date").notNull(),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
@@ -141,6 +143,7 @@ export const orders = mysqlTable("orders", {
     "refunded",
   ]).notNull(),
 
+  created_date: date("created_date").notNull(),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
