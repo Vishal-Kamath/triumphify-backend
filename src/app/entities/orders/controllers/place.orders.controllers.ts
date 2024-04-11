@@ -21,6 +21,7 @@ import { orderPlacedMailFormat } from "@/utils/mailer/order.mail";
 import { OrderDetails } from "@/lib/@types/orders";
 import { lowStockAlert } from "@/utils/courier/low-stock-alert";
 import { env } from "@/config/env.config";
+import { orderPlacedMailToAdmin } from "@/utils/mailer/order.admin.mail";
 
 function getTotals(cart: Cart[]) {
   const subTotal = parseFloat(
@@ -259,7 +260,11 @@ const handlePlaceOrders = async (
         order_details: new_order_details,
         userName: findUser.username || "Customer",
       }),
-      subject: "Order Placed Successfully",
+      subject: "Order Placed Successfully 🎉",
+    });
+    orderPlacedMailToAdmin({
+      orders: new_orders,
+      order_details: new_order_details,
     });
 
     return res.status(200).send({
