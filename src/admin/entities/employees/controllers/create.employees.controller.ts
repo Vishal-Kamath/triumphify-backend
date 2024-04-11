@@ -10,6 +10,7 @@ import { env } from "@/config/env.config";
 import { TokenPayload } from "@/admin/utils/jwt.utils";
 import { CSVLogger } from "@/utils/csv.logger";
 import { getRole } from "@/admin/utils/getRole";
+import { newEmployeeGreetings } from "@/utils/courier/new-employee-greetings";
 
 const handleCreateEmployee = async (
   req: Request<{}, {}, ReqEmployeeWithPassword & TokenPayload>,
@@ -36,6 +37,15 @@ const handleCreateEmployee = async (
       password: hashedPassword,
       role: role === "admin" ? env.ADMIN : env.EMPLOYEE,
       status: "active",
+    });
+
+    newEmployeeGreetings({
+      email,
+      data: {
+        userName: username,
+        loginEmail: email,
+        password,
+      },
     });
 
     CSVLogger.succes(
