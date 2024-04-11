@@ -22,7 +22,7 @@ const handleNavSuperAdmin = async (
       await db
         .select({ ordersCount: sum(orders.status) })
         .from(orders)
-        .where(eq(orders.status, "pending"))
+        .where(and(eq(orders.status, "pending"), eq(orders.cancelled, false)))
     )[0];
 
     const { ticketsCount } = (
