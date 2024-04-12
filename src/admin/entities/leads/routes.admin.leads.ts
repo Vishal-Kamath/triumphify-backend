@@ -7,8 +7,9 @@ import { triggerAction, updateLead } from "./validators.leads";
 
 const router = Router();
 
+router.get("/actions", leadsController.handleGetAllActions);
 router.post(
-  "/action/trigger",
+  "/actions/trigger",
   validateResources(blankSchema, triggerAction, blankSchema),
   leadsController.handleTriggerAction
 );

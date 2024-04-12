@@ -3,6 +3,7 @@ import handleUpdateLead from "./update.leads.controller";
 import handleUpdateLeadEmployee from "./update.employee.leads.controller";
 import handleDeleteLeads from "./delete.leads.controllers";
 import handleTriggerAction from "./trigger.action.leads.controller";
+import handleGetAllActions from "./getAll.actions..leads.controllers";
 
 export default {
   handleGetAllLeads,
@@ -10,4 +11,5 @@ export default {
   handleUpdateLeadEmployee,
   handleDeleteLeads,
   handleTriggerAction,
+  handleGetAllActions,
 };
