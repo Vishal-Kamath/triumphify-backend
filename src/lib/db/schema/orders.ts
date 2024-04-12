@@ -143,7 +143,7 @@ export const orders = mysqlTable("orders", {
     "refunded",
   ]).notNull(),
 
-  created_date: date("created_date").notNull(),
+  created_date: date("created_date"),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });

@@ -20,7 +20,8 @@
     "migrate": "drizzle-kit generate:mysql --schema=./src/lib/db/schema && node -r esbuild-register src/lib/db/migrate.ts",
     "studio": "drizzle-kit studio --host 127.0.0.1",
     "initSuperAdmin": "ts-node ./src/lib/db/initSuperAdmin.ts",
-    "generatePrivilages": "ts-node ./src/lib/db/generatePrivilages.ts"
+    "generatePrivilages": "ts-node ./src/lib/db/generatePrivilages.ts",
+    "migrateOrders": "ts-node ./src/lib/db/migrateOrders.ts"
   },
   "keywords": [],
   "author": "",
