@@ -13,6 +13,7 @@ router.post(
   validateResources(blankSchema, triggerAction, blankSchema),
   leadsController.handleTriggerAction
 );
+router.delete("/actions/:actionId", leadsController.handleDeleteAction);
 router
   .route("/:leadId")
   .post(
