@@ -80,7 +80,7 @@ export const order_details = mysqlTable("order_details", {
     length: 100,
   }).notNull(),
 
-  created_date: date("created_date").notNull(),
+  created_date: date("created_date").default(new Date("2024-01-01")),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });
