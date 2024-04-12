@@ -5,6 +5,7 @@ import {
   mysqlEnum,
   date,
   int,
+  float,
 } from "drizzle-orm/mysql-core";
 
 // -------------------------------------------------
@@ -17,6 +18,8 @@ export const employee = mysqlTable("employee", {
   password: varchar("password", { length: 100 }).notNull(),
   role: varchar("role", { length: 72 }).notNull(),
   status: mysqlEnum("status", ["active", "deactive"]).notNull(),
+  rate: float("rate").notNull().default(0),
+
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
 });

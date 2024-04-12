@@ -6,6 +6,7 @@ import {
   employee,
   employeeId,
   employeeWithPassword,
+  rateSchema,
 } from "./validators.employees";
 import employeeControllers from "./controllers/index.employees.controller";
 
@@ -28,6 +29,10 @@ router
   .post(
     validateResources(employeeId, employee, blankSchema),
     employeeControllers.handleUpdateSuperadmin
+  )
+  .patch(
+    validateResources(employeeId, rateSchema, blankSchema),
+    employeeControllers.handleEmployeeRateUpdateBySuperAdmin
   );
 
 router.get(

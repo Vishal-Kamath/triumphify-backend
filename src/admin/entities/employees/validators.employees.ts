@@ -31,6 +31,10 @@ export const employeeEmail = z.object({
 });
 export type EmployeeEmail = z.infer<typeof employeeEmail>;
 
+export const rateSchema = z.object({
+  rate: z.number().positive(),
+});
+export type ReqRateType = z.infer<typeof rateSchema>;
 
 export const employeePassword = z.object({
   currentPassword: z.string().trim().min(3).max(50),
