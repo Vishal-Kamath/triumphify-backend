@@ -3,10 +3,15 @@ import leadsController from "./controllers/index.leads.controllers";
 import validateResources, {
   blankSchema,
 } from "@/admin/middlewares/validateResources";
-import { updateLead } from "./validators.leads";
+import { triggerAction, updateLead } from "./validators.leads";
 
 const router = Router();
 
+router.post(
+  "/action/trigger",
+  validateResources(blankSchema, triggerAction, blankSchema),
+  leadsController.handleTriggerAction
+);
 router
   .route("/:leadId")
   .post(

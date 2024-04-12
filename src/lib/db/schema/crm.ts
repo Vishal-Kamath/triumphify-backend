@@ -5,6 +5,7 @@ import {
   mysqlEnum,
   text,
   boolean,
+  json,
 } from "drizzle-orm/mysql-core";
 import { users } from "./users";
 
@@ -22,6 +23,37 @@ export const leads = mysqlTable("leads", {
     .notNull()
     .default("new"),
   last_contacted: timestamp("last_contacted"),
+
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").onUpdateNow(),
+});
+
+// -------------------------------------------------
+// Actions
+// -------------------------------------------------
+export const actions = mysqlTable("actions", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+
+  title: varchar("title", { length: 100 }).notNull(),
+  subject: varchar("subject", { length: 100 }).notNull(),
+  body: text("body").notNull(),
+
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").onUpdateNow(),
+});
+
+// -------------------------------------------------
+// Action Logs
+// -------------------------------------------------
+export const action_logs = mysqlTable("action_logs", {
+  id: varchar("id", { length: 36 }).notNull().primaryKey(),
+  action_id: varchar("action_id", { length: 36 })
+    .notNull()
+    .references(() => actions.id),
+  receivers: json("receivers").notNull(),
+  title: varchar("title", { length: 100 }).notNull(),
+  subject: varchar("subject", { length: 100 }).notNull(),
+  body: text("body").notNull(),
 
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").onUpdateNow(),
