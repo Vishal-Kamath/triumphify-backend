@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { action_logs, actions } from "@/lib/db/schema";
 import { v4 as uuid } from "uuid";
 import { eq } from "drizzle-orm";
+import { CSVLogger } from "@/utils/csv.logger";
+import { getRole } from "@/admin/utils/getRole";
 
 const handleTriggerAction = async (
   req: Request<{}, {}, ReqTriggerAction & TokenPayload>,
@@ -33,14 +35,23 @@ const handleTriggerAction = async (
         },
       });
 
+      const log_id = uuid();
       await db.insert(action_logs).values({
-        id: uuid(),
+        id: log_id,
         action_id: actionId,
         title,
         subject,
         body,
         receivers,
       });
+      CSVLogger.info(
+        id,
+        getRole(role),
+        "triggered action with log id",
+        log_id,
+        "and action id",
+        actionId
+      );
     } else {
       const action = (
         await db.select().from(actions).where(eq(actions.id, actions)).limit(1)
@@ -60,14 +71,23 @@ const handleTriggerAction = async (
         },
       });
 
+      const log_id = uuid();
       await db.insert(action_logs).values({
-        id: uuid(),
+        id: log_id,
         action_id: action.id,
         title: action.title,
         subject: action.subject,
         body: action.body,
         receivers,
       });
+      CSVLogger.info(
+        id,
+        getRole(role),
+        "triggered action with log id",
+        log_id,
+        "and action id",
+        action.id
+      );
     }
 
     res.status(200).json({ title: "Action triggered", type: "success" });
