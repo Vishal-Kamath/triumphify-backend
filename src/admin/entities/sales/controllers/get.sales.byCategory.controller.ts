@@ -5,7 +5,7 @@ import { Logger } from "@/utils/logger";
 import { SQL, and, eq, gte, lte, or, sum } from "drizzle-orm";
 import { Request, Response } from "express";
 
-const handelGetSalesByCategory = async (
+const handleGetSalesByCategory = async (
   req: Request<
     { categoryId: string },
     {},
@@ -66,7 +66,7 @@ const handelGetSalesByCategory = async (
   }
 };
 
-export default handelGetSalesByCategory;
+export default handleGetSalesByCategory;
 
 const getCondition = (
   categoryId: string,

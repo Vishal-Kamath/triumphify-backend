@@ -3,7 +3,8 @@ import salesControllers from "./controllers/index.sales.controllers";
 
 const router = Router();
 
-router.get("/category/:categoryId", salesControllers.handelGetSalesByCategory);
+router.get("/", salesControllers.handleGetSales);
+router.get("/category/:categoryId", salesControllers.handleGetSalesByCategory);
 router.get("/product", salesControllers.handleGetSalesByProduct);
 
 export default router;
