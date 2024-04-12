@@ -68,6 +68,8 @@ const privilages: Privilage[] = [
 
       "/employees/details",
       "/employees/leads",
+      "/employees/actions",
+      "/employees/actions/:id",
       "/employees/tickets",
       "/employees/tickets/:id",
 
@@ -115,6 +117,8 @@ const privilages: Privilage[] = [
       "/employees/logs/:name",
       "/employees/create",
       "/employees/leads",
+      "/employees/actions",
+      "/employees/actions/:id",
       "/employees/tickets",
       "/employees/tickets/:id",
 
