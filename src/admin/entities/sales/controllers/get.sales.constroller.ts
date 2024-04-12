@@ -41,7 +41,7 @@ const handleGetSales = async (
       type: "success",
     });
   } catch (err) {
-    Logger.error("handle get sales by category", err);
+    Logger.error("handle get sales", err);
     res
       .status(500)
       .send({ description: "something went wrong", type: "error" });

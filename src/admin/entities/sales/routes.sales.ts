@@ -5,6 +5,6 @@ const router = Router();
 
 router.get("/", salesControllers.handleGetSales);
 router.get("/category/:categoryId", salesControllers.handleGetSalesByCategory);
-router.get("/product", salesControllers.handleGetSalesByProduct);
+router.get("/product/:productId", salesControllers.handleGetSalesByProduct);
 
 export default router;
