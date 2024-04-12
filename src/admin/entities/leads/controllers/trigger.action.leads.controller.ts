@@ -53,10 +53,10 @@ const handleTriggerAction = async (
         actionId
       );
     } else {
-      const action = (
-        await db.select().from(actions).where(eq(actions.id, actions)).limit(1)
+      const getaction = (
+        await db.select().from(actions).where(eq(actions.id, action)).limit(1)
       )[0];
-      if (!action) {
+      if (!getaction) {
         return res.status(400).json({
           description: "Action not found",
           type: "error",
@@ -66,18 +66,18 @@ const handleTriggerAction = async (
       triggerAction({
         receivers,
         data: {
-          subject: action.subject,
-          body: action.body,
+          subject: getaction.subject,
+          body: getaction.body,
         },
       });
 
       const log_id = uuid();
       await db.insert(action_logs).values({
         id: log_id,
-        action_id: action.id,
-        title: action.title,
-        subject: action.subject,
-        body: action.body,
+        action_id: getaction.id,
+        title: getaction.title,
+        subject: getaction.subject,
+        body: getaction.body,
         receivers,
       });
       CSVLogger.info(
@@ -86,7 +86,7 @@ const handleTriggerAction = async (
         "triggered action with log id",
         log_id,
         "and action id",
-        action.id
+        getaction.id
       );
     }
 
