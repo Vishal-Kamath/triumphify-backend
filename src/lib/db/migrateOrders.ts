@@ -23,7 +23,7 @@ async function migrateOrders() {
 
     for (const details of getAllOrderDetails) {
       await db
-        .update(orders)
+        .update(order_details)
         .set({
           created_date: new Date(details.created_at),
         })
