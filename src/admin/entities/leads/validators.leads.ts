@@ -36,3 +36,16 @@ export const triggerAction = z.object({
     .min(1),
 });
 export type ReqTriggerAction = z.infer<typeof triggerAction>;
+
+export const action = z.object({
+  title: z
+    .string()
+    .max(100)
+    .refine((value) => !!value.trim(), "Field Required"),
+  subject: z
+    .string()
+    .max(100)
+    .refine((value) => !!value.trim(), "Field Required"),
+  body: z.string().refine((value) => !!value.trim(), "Field Required"),
+});
+export type ReqAction = z.infer<typeof action>;

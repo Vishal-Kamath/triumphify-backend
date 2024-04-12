@@ -5,6 +5,8 @@ import handleDeleteLeads from "./delete.leads.controllers";
 import handleTriggerAction from "./trigger.action.leads.controller";
 import handleGetAllActions from "./getAll.actions..leads.controllers";
 import handleDeleteAction from "./delete.action.controllers";
+import handleGetByIdAction from "./get.byId.action.leads.controllers";
+import handleUpdateAction from "./update.action.leads.controller";
 
 export default {
   handleGetAllLeads,
@@ -14,4 +16,6 @@ export default {
   handleTriggerAction,
   handleGetAllActions,
   handleDeleteAction,
+  handleGetByIdAction,
+  handleUpdateAction,
 };
