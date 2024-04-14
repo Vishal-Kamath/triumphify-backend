@@ -8,6 +8,7 @@ import {
   json,
 } from "drizzle-orm/mysql-core";
 import { users } from "./users";
+import { employee } from "./employees";
 
 // -------------------------------------------------
 // Leads
@@ -51,6 +52,9 @@ export const action_logs = mysqlTable("action_logs", {
     .notNull()
     .references(() => actions.id),
   receivers: json("receivers").notNull(),
+  triggered_by: varchar("triggered_by", { length: 36 })
+    .notNull()
+    .references(() => employee.id),
   title: varchar("title", { length: 100 }).notNull(),
   subject: varchar("subject", { length: 100 }).notNull(),
   body: text("body").notNull(),

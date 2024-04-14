@@ -39,6 +39,7 @@ const handleTriggerAction = async (
       await db.insert(action_logs).values({
         id: log_id,
         action_id: actionId,
+        triggered_by: id,
         title,
         subject,
         body,
@@ -75,6 +76,7 @@ const handleTriggerAction = async (
       await db.insert(action_logs).values({
         id: log_id,
         action_id: getaction.id,
+        triggered_by: id,
         title: getaction.title,
         subject: getaction.subject,
         body: getaction.body,
