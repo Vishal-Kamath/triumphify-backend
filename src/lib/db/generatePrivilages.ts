@@ -146,9 +146,6 @@ const privilages: Privilage[] = [
       "/orders/details",
       "/orders/details/:id",
 
-      "/orders/analytics",
-      "/orders/analytics/:id",
-
       // Banners
       "/banners/:type",
       "/banners/:type/:id",
@@ -164,21 +161,14 @@ const privilages: Privilage[] = [
 ];
 
 async function generatePrivilages() {
-  const existingPrivilages = await db.select().from(employee_privilages);
-
+  await db.delete(employee_privilages);
   for (const privilage of privilages) {
+    const role = privilage.role;
     for (const path of privilage.paths) {
-      const privilageExists = existingPrivilages.find(
-        (p) => p.role === privilage.role && p.path === path
-      );
-      if (privilageExists) {
-        continue;
-      }
-
       await db.insert(employee_privilages).values({
         id: uuid(),
-        role: privilage.role,
-        path: path,
+        path,
+        role,
       });
     }
   }
