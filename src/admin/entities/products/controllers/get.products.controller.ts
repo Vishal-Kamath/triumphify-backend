@@ -10,6 +10,7 @@ const handleGetProducts = async (req: Request, res: Response) => {
       .select({
         id: products.id,
         name: products.name,
+        description: products.description,
         slug: products.slug,
         brand_name: products.brand_name,
         category: categories.name,
