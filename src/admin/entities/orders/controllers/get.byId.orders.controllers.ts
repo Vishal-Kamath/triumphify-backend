@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { order_details, orders } from "@/lib/db/schema";
+import { order_details, orders, tickets, users } from "@/lib/db/schema";
 import { Logger } from "@/utils/logger";
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
@@ -39,10 +39,32 @@ const handleGetByIdOrdersControllers = async (
       .from(orders)
       .where(eq(orders.group_id, order.group_id));
 
+    const ticketsList = await db
+      .select({
+        id: tickets.id,
+        link: tickets.link,
+
+        user_id: tickets.user_id,
+        user_username: users.username,
+        user_image: users.image,
+
+        title: tickets.title,
+        description: tickets.description,
+        status: tickets.status,
+        type: tickets.type,
+
+        created_at: tickets.created_at,
+        updated_at: tickets.updated_at,
+      })
+      .from(tickets)
+      .where(eq(tickets.link, order.id))
+      .leftJoin(users, eq(users.id, tickets.user_id));
+
     const data = {
       order,
       order_details: ordersDetails,
       all_orders: allOrders,
+      tickets: ticketsList,
     };
 
     res.status(200).send({
