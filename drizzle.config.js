@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
+import { defineConfig } from "drizzle-kit";
 dotenv.config({ path: ".env" });
 
-/** @type { import("drizzle-kit").Config } */
-export default {
+export default defineConfig({
   driver: "mysql2",
   schema: "./src/lib/db/schema",
   dbCredentials: {
@@ -12,4 +12,4 @@ export default {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
   },
-};
+});
