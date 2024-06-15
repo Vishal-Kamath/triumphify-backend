@@ -59,6 +59,11 @@ const privilages: Privilage[] = [
       "/banners/:type/create",
       "/banners/main",
       "/banners/sub",
+
+      // blog
+      "/blog/posts",
+      "/blog/write",
+      "/blog/:id",
     ],
   },
   {
@@ -103,6 +108,11 @@ const privilages: Privilage[] = [
       "/banners/:type/create",
       "/banners/main",
       "/banners/sub",
+
+      // blog
+      "/blog/posts",
+      "/blog/write",
+      "/blog/:id",
     ],
   },
   {
@@ -152,6 +162,11 @@ const privilages: Privilage[] = [
       "/banners/:type/create",
       "/banners/main",
       "/banners/sub",
+
+      // blog
+      "/blog/posts",
+      "/blog/write",
+      "/blog/:id",
 
       // config
       "/config/gtm",

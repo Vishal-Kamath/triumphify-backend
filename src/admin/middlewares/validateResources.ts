@@ -1,4 +1,4 @@
-import { z, AnyZodObject } from "zod";
+import { z, AnyZodObject, ZodTypeAny } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { Logger } from "@/utils/logger";
 
@@ -6,7 +6,7 @@ export const blankSchema = z.object({});
 const validateResources =
   (
     paramsSchema: AnyZodObject,
-    bodySchema: AnyZodObject,
+    bodySchema: AnyZodObject | ZodTypeAny,
     querySchema: AnyZodObject
   ) =>
   (req: Request, res: Response, next: NextFunction) => {
