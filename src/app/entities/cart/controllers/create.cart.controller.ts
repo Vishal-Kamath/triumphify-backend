@@ -57,8 +57,11 @@ const handleCreateCart = async (
     });
 
     res.status(200).send({
-      title: "Added to cart",
-      description: `Product "${findProductVariation.products.name}" added to your cart`,
+      data: {
+        name: findProductVariation.products.name,
+        variationId: variationId,
+        image: (findProductVariation.products.product_images as string[])[0],
+      },
       type: "success",
     });
   } catch (err) {
