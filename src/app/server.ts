@@ -39,6 +39,7 @@ import bannerRoutes from "@app/entities/banners/routes.banner";
 import categoryRoutes from "@app/entities/categories/routes.categories";
 import productsRoutes from "@app/entities/products/routes.products";
 import blogsRoutes from "@app/entities/blogs/routes.blogs";
+import configsRoutes from "@app/entities/configs/routes.config";
 
 initPassport(app);
 app.use("/api/auth", authRoutes);
@@ -48,6 +49,7 @@ app.use("/api/banners", bannerRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/blogs", blogsRoutes);
+app.use("/api/configs", configsRoutes);
 
 // -------------------------------------------------
 // Protected Routes

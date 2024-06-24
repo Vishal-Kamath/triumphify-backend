@@ -93,12 +93,14 @@ app.use("/api/session", adminSessionRouter);
 import superadminEmployeeRoutes from "@admin/entities/employees/routes.superadmin.employee";
 import ordersProtectedRoutes from "@admin/entities/orders/routes.protected.orders";
 import salesRoutes from "@admin/entities/sales/routes.sales";
+import configRoutes from "@admin/entities/configs/routes.config";
 import { cleanup } from "./utils/cleanup";
 
 app.use(validateSuperAdmin);
 app.use("/api/employees", superadminEmployeeRoutes);
 app.use("/api/orders", ordersProtectedRoutes);
 app.use("/api/sales", salesRoutes);
+app.use("/api/configs", configRoutes);
 
 // 404
 app.all("*", (req: Request, res: Response) => {
