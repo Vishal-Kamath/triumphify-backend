@@ -71,6 +71,8 @@ export const products = mysqlTable("products", {
   product_accordians: json("product_accordians").notNull(),
   product_images: json("product_images").notNull(),
 
+  linked_to_main_banner: boolean("linked_to_main_banner"),
+
   // meta data
   meta_title: varchar("meta_title", { length: 100 }),
   meta_description: varchar("meta_description", { length: 250 }),

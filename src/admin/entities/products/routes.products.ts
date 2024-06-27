@@ -3,7 +3,13 @@ import productControllers from "./controllers/index.products.controllers";
 import validateResources, {
   blankSchema,
 } from "@admin/middlewares/validateResources";
-import { pinned, product, status, updateProduct } from "./validators.products";
+import {
+  linkToBanner,
+  pinned,
+  product,
+  status,
+  updateProduct,
+} from "./validators.products";
 
 const router = Router();
 
@@ -44,4 +50,11 @@ router
   )
   .delete(productControllers.handleDeleteProduct);
 
+router
+  .route("/:id/link")
+  .post(
+    validateResources(blankSchema, linkToBanner, blankSchema),
+    productControllers.handleLinkProductToBanner
+  );
+  
 export default router;

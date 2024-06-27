@@ -8,6 +8,7 @@ import handleGetReviewStats from "./get.review.stats.controllers";
 import handleGetAllReviews from "./get.all.reviews.products.controller";
 import handleUserReviewsPinned from "./update.user.review.pinned.products.controller";
 import handleUserReviewsStatus from "./update.user.review.status.products.controller";
+import handleLinkProductToBanner from "./link.product.to.banner";
 
 export default {
   handleCreateProduct,
@@ -20,4 +21,5 @@ export default {
   handleGetAllReviews,
   handleUserReviewsPinned,
   handleUserReviewsStatus,
+  handleLinkProductToBanner,
 };

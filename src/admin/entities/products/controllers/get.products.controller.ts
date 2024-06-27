@@ -15,6 +15,9 @@ const handleGetProducts = async (req: Request, res: Response) => {
         brand_name: products.brand_name,
         category: categories.name,
         product_images: products.product_images,
+
+        linked_to_main_banner: products.linked_to_main_banner,
+
         meta_title: products.meta_title,
         meta_description: products.meta_description,
         meta_keywords: products.meta_keywords,

@@ -130,3 +130,11 @@ export const status = z.object({
 export type ReqReviewStatus = z.infer<typeof status>
 
 export type ReqUpdateProduct = z.infer<typeof updateProduct>;
+
+
+// linked to banner
+export const linkToBanner = z.object({
+  linked_to_main_banner: z.boolean()
+})
+
+export type ReqLinkToBanner = z.infer<typeof linkToBanner>;

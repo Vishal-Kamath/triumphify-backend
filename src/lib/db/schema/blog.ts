@@ -1,4 +1,5 @@
 import {
+  boolean,
   int,
   json,
   mysqlEnum,
@@ -18,6 +19,8 @@ export const blogs = mysqlTable("blogs", {
 
   image: text("image").notNull(),
   title: varchar("title", { length: 255 }).notNull(),
+
+  linked_to_main_banner: boolean("linked_to_main_banner"),
 
   created_by: varchar("created_by", { length: 36 })
     .notNull()

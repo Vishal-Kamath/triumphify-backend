@@ -16,3 +16,10 @@ export const blogValidator = z.object({
 });
 
 export type ReqBlog = z.infer<typeof blogValidator>;
+
+// linked to banner
+export const linkToBanner = z.object({
+  linked_to_main_banner: z.boolean()
+})
+
+export type ReqLinkToBanner = z.infer<typeof linkToBanner>;

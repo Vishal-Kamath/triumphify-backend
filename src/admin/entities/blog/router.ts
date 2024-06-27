@@ -3,7 +3,7 @@ import blogControllers from "./controllers/index.blog.controller";
 import validateResources, {
   blankSchema,
 } from "@/admin/middlewares/validateResources";
-import { blogValidator } from "./validators";
+import { blogValidator, linkToBanner } from "./validators";
 
 const router = Router();
 
@@ -23,5 +23,12 @@ router
   .route("/:blogId")
   .get(blogControllers.handleGetByIdBlog)
   .delete(blogControllers.handleDeleteBlog);
+
+router
+  .route("/:blogId/link")
+  .post(
+    validateResources(blankSchema, linkToBanner, blankSchema),
+    blogControllers.handleLinkBlogToBanner
+  );
 
 export default router;

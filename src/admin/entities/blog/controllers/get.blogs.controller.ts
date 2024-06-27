@@ -10,10 +10,6 @@ const handleGetAllBlogs = async (
   res: Response
 ) => {
   try {
-    const role = getRole(req.body.token.role);
-    const status = req.query.status;
-    const { id } = req.body.token;
-
     const allBlogs = await db.select().from(blogs);
 
     res.status(200).send({
