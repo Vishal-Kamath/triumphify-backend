@@ -21,11 +21,17 @@ export const env = envsafe({
     desc: "The port the cdn is running on",
     example: 80,
   }),
+  WS_PORT: port({
+    devDefault: 5500,
+    desc: "The port the cdn is running on",
+    example: 80,
+  }),
 
   // endpoints
   APP_ENDPOINT: str(),
   ADMIN_ENDPOINT: str(),
   CDN_ENDPOINT: str(),
+  WS_ENDPOINT: str(),
 
   // websites
   WEBSITE: str(),

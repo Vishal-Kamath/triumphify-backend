@@ -4,3 +4,7 @@ dist
 
 # Enviroment variables
 .env
+
+# package json
+package.json
+package-lock.json

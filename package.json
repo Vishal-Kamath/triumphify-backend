@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:app": "npm run prod:app",
-    "start:admin": "npm run prod:admin",
-    "start:cdn": "npm run prod:cdn",
     "build": "tsc",
     "watch": "tsc --watch",
+    "start:app": "npm run prod:app",
     "prod:app": "cross-env NODE_ENV=production node ./dist/app/server.js",
-    "prod:admin": "cross-env NODE_ENV=production node ./dist/admin/server.js",
-    "prod:cdn": "cross-env NODE_ENV=production node ./dist/cdn/server.js",
     "dev:app": "cross-env NODE_ENV=development nodemon ./src/app/server.ts",
+    "start:admin": "npm run prod:admin",
+    "prod:admin": "cross-env NODE_ENV=production node ./dist/admin/server.js",
     "dev:admin": "cross-env NODE_ENV=development nodemon --signal SIGINT ./src/admin/server.ts",
+    "start:cdn": "npm run prod:cdn",
+    "prod:cdn": "cross-env NODE_ENV=production node ./dist/cdn/server.js",
     "dev:cdn": "cross-env NODE_ENV=development nodemon ./src/cdn/server.ts",
+    "start:ws": "npm run prod:ws",
+    "prod:ws": "cross-env NODE_ENV=production node ./dist/ws/server.js",
+    "dev:ws": "cross-env NODE_ENV=development nodemon ./src/ws/server.ts",
     "migration:generate": "drizzle-kit generate:mysql --schema=./src/lib/db/schema",
     "migration:push": "node -r esbuild-register src/lib/db/migrate.ts",
     "migrate": "drizzle-kit generate:mysql --schema=./src/lib/db/schema && node -r esbuild-register src/lib/db/migrate.ts",
@@ -27,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@socket.io/admin-ui": "^0.5.1",
     "@trycourier/courier": "^6.1.0",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
@@ -81,6 +85,7 @@
     "@app": "dist/app",
     "@admin": "dist/admin",
     "@cdn": "dist/cdn",
+    "@ws": "dist/ws",
     "@": "dist"
   }
 }

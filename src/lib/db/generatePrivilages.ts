@@ -25,6 +25,10 @@ const privilages: Privilage[] = [
     role: "employee",
     paths: [
       "/users/accounts",
+      "/users/contacts",
+      "/users/contacts/:id",
+      "/users/messages",
+      "/users/messages/:id",
       "/users/leads",
       "/users/tickets",
       "/users/tickets/:id",
@@ -70,6 +74,10 @@ const privilages: Privilage[] = [
     role: "admin",
     paths: [
       "/users/accounts",
+      "/users/contacts",
+      "/users/contacts/:id",
+      "/users/messages",
+      "/users/messages/:id",
 
       "/employees/details",
       "/employees/leads",
@@ -120,6 +128,10 @@ const privilages: Privilage[] = [
     paths: [
       "/analytics",
       "/users/stats",
+      "/users/contacts",
+      "/users/contacts/:id",
+      "/users/messages",
+      "/users/messages/:id",
 
       "/employees/details",
       "/employees/details/:id",
