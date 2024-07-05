@@ -9,7 +9,12 @@ import { instrument } from "@socket.io/admin-ui";
 function chatSocket(server: HTTPServerType) {
   const io = new Server(server, {
     cors: {
-      origin: [env.ADMIN_WEBSITE, env.APP_WEBSITE, "https://admin.socket.io"],
+      origin: [
+        env.WEBSITE,
+        env.APP_WEBSITE,
+        env.ADMIN_WEBSITE,
+        env.ADMIN_ENDPOINT,
+      ],
       credentials: true,
     },
     cookie: true,

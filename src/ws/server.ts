@@ -21,7 +21,6 @@ app.use(
       env.APP_WEBSITE,
       env.ADMIN_WEBSITE,
       env.ADMIN_ENDPOINT,
-      "https://admin.socket.io",
     ],
     credentials: true,
   })
