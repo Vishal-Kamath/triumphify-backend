@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { Logger } from "@/utils/logger";
 import { signToken } from "@admin/utils/jwt.utils";
+import { env } from "@/config/env.config";
 
 export const addTokens = (res: Response, id: string, role: string) => {
   try {
@@ -15,20 +16,39 @@ export const addTokens = (res: Response, id: string, role: string) => {
       role,
     });
 
-    res.cookie("accessToken-admin", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 1000 * 60 * 15,
-    });
-    res.cookie("refreshToken-admin", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-    });
+    if (env.NODE_ENV === "production") {
+      res.cookie("accessToken-admin", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        domain: ".triumphify.com",
+        path: "/",
+        maxAge: 1000 * 60 * 15,
+      });
+      res.cookie("refreshToken-admin", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        domain: ".triumphify.com",
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+      });
+    } else {
+      res.cookie("accessToken-admin", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 1000 * 60 * 15,
+      });
+      res.cookie("refreshToken-admin", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+      });
+    }
 
     return;
   } catch (err) {
