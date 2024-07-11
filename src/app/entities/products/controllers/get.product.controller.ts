@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { categories, products } from "@/lib/db/schema";
+import { Logger } from "@/utils/logger";
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
 
@@ -41,7 +42,13 @@ const handleGetProduct = async (
       data: product,
       type: "success",
     });
-  } catch (err) {}
+  } catch (err) {
+    Logger.error("handle get product error:", err);
+    res.status(500).send({
+      description: "Internal server error",
+      type: "error",
+    });
+  }
 };
 
 export default handleGetProduct;

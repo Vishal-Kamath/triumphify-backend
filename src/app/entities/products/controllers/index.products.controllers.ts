@@ -8,10 +8,12 @@ import handleUpdateUserProductReview from "./update.user.review.products.control
 import handleDeleteUserReview from "./delete.user.review.products.controller";
 import handleGetAllReviews from "./get.all.reviews.products.controller";
 import handleGetReviewStats from "./get.stats.reviews.products.controller";
+import handleGetAllProducts from "./get.all.products.controllers";
 
 export default {
   handleGetProductMeta,
   handleGetProduct,
+  handleGetAllProducts,
   handleGetProductShowcase,
   handleGetProductBuyDetails,
   handleCreateUserProductReview,

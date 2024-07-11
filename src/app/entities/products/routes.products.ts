@@ -3,6 +3,7 @@ import productControllers from "./controllers/index.products.controllers";
 
 const router = Router();
 
+router.get("/details", productControllers.handleGetAllProducts);
 router.get("/details/:slug", productControllers.handleGetProduct);
 router.get("/details/:slug/buy", productControllers.handleGetProductBuyDetails);
 router.get("/meta/:slug", productControllers.handleGetProductMeta);
