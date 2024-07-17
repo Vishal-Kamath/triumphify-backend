@@ -1,4 +1,4 @@
-import { env } from "@/config/env.config";
+import { env } from "../../config/env.config";
 import * as crypto from "crypto";
 
 export class Encrypt {
