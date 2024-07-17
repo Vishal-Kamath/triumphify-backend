@@ -71,6 +71,10 @@ export const env = envsafe({
   GOOGLE_CLIENT_ID: str(),
   GOOGLE_CLIENT_SECRET: str(),
 
+  // Encrypt
+  ENCRYPT_KEY: str(),
+  ENCRYPT_IV: str(),
+
   // JWT
   ACCESS_TOKEN_PRIVATE: str(),
   ACCESS_TOKEN_PUBLIC: str(),

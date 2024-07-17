@@ -7,16 +7,17 @@ import {
   int,
   float,
 } from "drizzle-orm/mysql-core";
+import { encryptedText, encryptedVarchar } from "./util";
 
 // -------------------------------------------------
 // Employee
 // -------------------------------------------------
 export const employee = mysqlTable("employee", {
   id: varchar("id", { length: 36 }).notNull().primaryKey(),
-  email: varchar("email", { length: 100 }).notNull().unique(),
-  username: varchar("username", { length: 50 }).notNull(),
+  email: encryptedVarchar("email", { length: 100 }).notNull().unique(),
+  username: encryptedText("username", { length: 50 }).notNull(),
   password: varchar("password", { length: 100 }).notNull(),
-  role: varchar("role", { length: 72 }).notNull(),
+  role: encryptedText("role").notNull(),
   status: mysqlEnum("status", ["active", "deactive"]).notNull(),
   rate: float("rate").notNull().default(0),
 

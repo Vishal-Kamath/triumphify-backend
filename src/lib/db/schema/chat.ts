@@ -5,6 +5,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
+import { encryptedText } from "./util";
 
 export const conversation = mysqlTable("conversation", {
   room: varchar("room", { length: 36 }).notNull().primaryKey(),
@@ -22,7 +23,7 @@ export const chat = mysqlTable("chat", {
   room_id: varchar("room_id", { length: 36 })
     .notNull()
     .references(() => conversation.room),
-  msg: text("msg"),
+  msg: encryptedText("msg"),
   sender: mysqlEnum("sender", ["customer", "operator"]),
   sender_id: varchar("sender_id", { length: 36 }).notNull(),
 
