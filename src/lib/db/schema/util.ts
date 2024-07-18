@@ -25,15 +25,15 @@ export const encryptedVarchar = customType<{ data: string }>({
   },
 });
 
-export const encryptedJSON = <TData>(name: string) =>
-  customType<{ data: TData; driverData: string }>({
-    dataType() {
-      return "json";
-    },
-    fromDriver(value: unknown): TData {
-      return JSON.parse(Encrypt.decrypt(value! as string));
-    },
-    toDriver(value: TData): string {
-      return Encrypt.encrypt(JSON.stringify(value));
-    },
-  })(name);
+// export const encryptedJSON = <TData>(name: string) =>
+//   customType<{ data: TData; driverData: string }>({
+//     dataType() {
+//       return "json";
+//     },
+//     fromDriver(value: unknown): TData {
+//       return JSON.parse(Encrypt.decrypt(value! as string));
+//     },
+//     toDriver(value: TData): string {
+//       return Encrypt.encrypt(JSON.stringify(value));
+//     },
+//   })(name);
